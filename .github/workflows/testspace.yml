@@ -1,0 +1,43 @@
+# This workflow will download a prebuilt Ruby version, install dependencies and run tests with Rake
+# For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
+
+name: TestSpace Coverage 
+
+on:
+  push:
+    branches: [ master, working ]
+  pull_request:
+    branches: [ master, working ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 50
+
+      - name: Set up Ruby
+      # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
+      # change this to (see https://github.com/ruby/setup-ruby#versioning):
+        # uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@473e4d8fe5dd94ee328fdfca9f8c9c7afc9dae5e
+        with:
+          ruby-version: '3.0'
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+      - name: Install Appraisal Gems
+        run: bundle exec rake install
+
+      - name: Run tests
+        run: FOR_TESTSPACE=true bundle exec rake latest
+
+      - uses: testspace-com/setup-testspace@v1
+        with:
+          domain: ${{ github.repository_owner }}
+          token: ${{ secrets.TESTSPACE_TOKEN }}
+      - name: Push result to TestSpace server
+        run: |
+          testspace ./coverage/coverage.xml
+        if: always()
+

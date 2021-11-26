@@ -1,0 +1,16 @@
+# coverage:
+#   range: 100..100
+#   round: up
+#   precision: 2
+
+coverage:
+  status:
+    patch:
+      default:
+        target: 100%
+
+# codecov:
+#   fixes:
+#      - "/Users/bob/development/code/::"
+
+  # disable_default_path_fixes: false

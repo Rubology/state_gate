@@ -1,0 +1,43 @@
+AllCops:
+  UseCache: false
+  TargetRubyVersion: 2.5
+  Exclude:
+    - spec/*
+
+Layout/ExtraSpacing:
+  AllowForAlignment: true
+  ForceEqualSignAlignment: true
+
+
+Layout/EmptyLines:
+  Enabled: false
+
+
+Layout/EmptyLinesAroundClassBody:
+  EnforcedStyle: empty_lines_except_namespace
+
+
+Layout/EmptyLinesAroundModuleBody:
+  EnforcedStyle: empty_lines_except_namespace
+
+
+Layout/EmptyLineBetweenDefs:
+  NumberOfEmptyLines: 3
+
+
+Layout/HashAlignment:
+  EnforcedColonStyle: table
+
+
+Layout/SpaceAroundOperators:
+  AllowForAlignment: true
+
+
+Style/CommentedKeyword:
+  Enabled: false
+
+
+Style/SignalException:
+  EnforcedStyle: semantic
+
+

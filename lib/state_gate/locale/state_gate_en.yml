@@ -1,0 +1,5 @@
+en:
+  state_gate:
+    non_symbol_sm_name_err: "StateGate#state_method_name must be a Symbol"
+    included_err:           "StateGate requires %{base} to derive from ActiveRecord."
+    extended_err:           "%{base} should use 'include StateGate' and not 'extend StateGate'."

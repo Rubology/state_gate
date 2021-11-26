@@ -1,0 +1,58 @@
+en:
+  state_gate:
+    engine:
+
+      # ======================================================================
+      # = Engine
+      # ======================================================================
+
+      attribute_type_err:       "The provided attribute must be a Symbol."
+      invalid_state_err:        "%{val} is not valid state for %{kattr}."
+      klass_type_err:           "The proved class must be a Class or String."
+      missing_config_block_err: "No configuration block provided."
+
+
+
+      # ======================================================================
+      # = Engine Configuration
+      # ======================================================================
+
+      config:
+        bad_command:               "'%{cmd}' is not a valid configuration option."
+        default_repeat_err:        "default for %{kattr} has been specified multiple times."
+        default_state_err:         "The default set for %{kattr} is not a valid state."
+        default_type_err:          "default for %{kattr} must be a Symbol."
+        prefix_multiple_err:       "prefix for %{kattr} has been defined multiple times."
+        prefix_type_err:           "prefix for %{kattr} must be a Symbol."
+        single_state_err:          "%{kattr} needs at least two states defined."
+        state_force_name_err:      "%{kattr}:%{state} states cannot begin with 'force_'."
+        state_not_name_err:        "%{kattr}:%{state} states cannot begin with 'not_'."
+        state_opts_key_type_err:   "options for %{kattr}:%{state} must be Symbols."
+        state_repeat_err:          "%{kattr}:%{state} has been defined multiple times."
+        state_type_err:            "states for %{kattr} must be a Symbol."
+        states_missing_err:        "no states have been defined for %{kattr}."
+        suffix_multiple_err:       "suffix for %{kattr} has been defined multiple times."
+        suffix_type_err:           "suffix for %{kattr} must be a Symbol."
+        transition_key_type_err:   "transitions for %{kattr}:%{state} must be Symbols."
+        any_transition_err:        "when transitioning to :any on %{kattr}:%{state}, :any must be the only transition."
+        transition_state_err:      "%{kattr} transitions from :%{state} to invalid state :%{transition}."
+        transitionless_states_err: "There are no state transitions leading to %{kattr} %{states}."
+
+
+
+      # ======================================================================
+      # = Engine Sequencer
+      # ======================================================================
+
+      non_sequential_err: "%{kattr} is not sequential and does not implement sequence methods."
+
+
+
+      # ======================================================================
+      # = Engine Transitioner
+      # ======================================================================
+
+      invalid_state_transition_err: "%{kattr} cannot transition from :%{from} to :%{to}."
+
+
+

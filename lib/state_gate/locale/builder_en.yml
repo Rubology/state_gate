@@ -1,0 +1,14 @@
+en:
+  state_gate:
+    builder:
+
+      non_class_err:              "StateGate requires %{klass} to be a Class."
+      non_active_record_err:      "StateGate requires %{klass} to derive from ActiveRecord."
+      missing_attribute_err:      "Missing attribute name when using 'state_gate' in class '%{klass}'."
+      attribute_type_err:         "StateGate <attr> must be a Symbol."
+      non_db_attr_err:            "%{kattr} is not a database attribute."
+      non_string_column_err:      "StateGate requires %{kattr} to be a database :string type."
+      existing_state_gate_err:    "An StateGate has already been defined for %{kattr}."
+      conflict_err:               "StateGate for %{klass}#%{attribute} will generate %{type} method '%{method_name}', which is already defined by %{source}."
+
+

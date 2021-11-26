@@ -1,0 +1,22 @@
+# Byebug on ruby 3 requires flags
+# gem install byebug -v '11.1.3' -- --with-cflags=-fdeclspec
+
+source 'https://rubygems.org'
+
+gemspec
+
+gem 'rack'
+gem 'amazing_print'
+gem 'appraisal'
+gem 'codecov'
+gem 'database_cleaner-active_record'
+gem 'rake', '~> 13.0'
+gem 'rspec', '~> 3.0'
+gem 'rubocop'
+gem 'sdoc'
+gem 'simplecov'
+
+
+if RUBY_VERSION.split('.').first == 2
+  gem 'byebug'
+end
