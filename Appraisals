@@ -1,13 +1,13 @@
   # frozen_string_literal: true
 
-appraise 'active-record-7-0-0-alpha2' do
+appraise 'active-record-7-0-0' do
   gem 'sqlite3', '~> 1.4.1'
-  gem 'activerecord', '7.0.0.alpha2'
+  gem 'activerecord', '7.0.0'
 end
 
-appraise 'active-record-6-1-4-1' do
+appraise 'active-record-6-1-4-4' do
   gem 'sqlite3', '~> 1.4.1'
-  gem 'activerecord', '6.1.4.1'
+  gem 'activerecord', '6.1.4.4'
 end
 
 
@@ -17,9 +17,9 @@ end
 
 if Gem::Version.new(RUBY_VERSION) < Gem::Version.new('3.0.0')
 
-  appraise 'active-record-6-0-4-1' do
+  appraise 'active-record-6-0-4-4' do
     gem 'sqlite3', '~> 1.4.0'
-    gem 'activerecord', '6.0.4.1'
+    gem 'activerecord', '6.0.4.4'
   end
 
   appraise 'active-record-5-2-6' do
