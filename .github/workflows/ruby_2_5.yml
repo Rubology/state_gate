@@ -5,9 +5,9 @@ name: Ruby 2.5
 
 on:
   push:
-    branches: [ master, working ]
+    branches: [ master, dev ]
   pull_request:
-    branches: [ master, working ]
+    branches: [ master, dev ]
 
 jobs:
   test:
