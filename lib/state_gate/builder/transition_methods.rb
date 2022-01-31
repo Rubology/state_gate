@@ -118,7 +118,6 @@ module StateGate
 
 
 
-
       # Adds an instance method to return TRUE if the current attribute state can
       # transition to the queries status.
       #   eg:

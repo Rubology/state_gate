@@ -64,7 +64,7 @@ module StateGate
 
         _add__instance__attrs
         _add__instance__human_attrs
-        _add__instance__human_attr        
+        _add__instance__human_attr
         _add__instance__state?
         _add__instance__not_state?
         _add__instance__attrs_for_select
