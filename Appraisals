@@ -5,13 +5,14 @@ ruby_2_5     = Gem::Version.new('2.5')
 ruby_2_6     = Gem::Version.new('2.6')
 ruby_2_7     = Gem::Version.new('2.7')
 ruby_3_0     = Gem::Version.new('3.0')
+ruby_3_1     = Gem::Version.new('3.1')
 
 
 # ActiveRecord 7.0
 if current_ruby >= ruby_2_7
-  appraise 'active-record-7-0-0' do
+  appraise 'active-record-7-0-1' do
     gem 'sqlite3', '~> 1.4.0'
-    gem 'activerecord', '7.0.0'
+    gem 'activerecord', '7.0.1'
     gem 'database_cleaner-active_record'
   end
 end
