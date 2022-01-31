@@ -41,10 +41,14 @@ require_relative '../lib/state_gate/rspec'
 # ======================================================================
 #  Report the Version
 # ======================================================================
+
+current_ruby = Gem::Version.new(RUBY_VERSION)
+msg          = "ActiveRecord: #{ActiveRecord.gem_version} (#{current_ruby})"
+
 puts "\n\n"
-puts '=' * 30
-puts "\n  ActiveRecord: #{ActiveRecord.gem_version}\n\n"
-puts '=' * 30
+puts '=' * (msg.size + 4)
+puts "\n  #{msg}\n\n"
+puts '=' * (msg.size + 4)
 puts "\n\n"
 
 
