@@ -107,6 +107,8 @@ module StateGate
   class ConfigurationError < StandardError # :nodoc:
   end
 
+
+
   ##
   # Conflict Error for reporting when a generated method name
   # conflicts with an existing method name
