@@ -10,9 +10,9 @@ ruby_3_1     = Gem::Version.new('3.1')
 
 # ActiveRecord 7.0
 if current_ruby >= ruby_2_7
-  appraise 'active-record-7-0-2-3' do
+  appraise 'active-record-7-0-2-4' do
     gem 'sqlite3', '~> 1.4.0'
-    gem 'activerecord', '7.0.2.3'
+    gem 'activerecord', '7.0.2.4'
     gem 'database_cleaner-active_record'
   end
 end
@@ -20,9 +20,9 @@ end
 
 # ActiveRecord 6.1
 if current_ruby >= ruby_2_5
-  appraise 'active-record-6-1-5' do
+  appraise 'active-record-6-1-5-1' do
     gem 'sqlite3', '~> 1.4.0'
-    gem 'activerecord', '6.1.5'
+    gem 'activerecord', '6.1.5.1'
     gem 'database_cleaner-active_record'
   end
 end
@@ -30,9 +30,9 @@ end
 
 # ActiveRecord 6.0
 if current_ruby >= ruby_2_5 and current_ruby < ruby_3_0
-  appraise 'active-record-6-0-4-7' do
+  appraise 'active-record-6-0-4-8' do
     gem 'sqlite3', '~> 1.4.0'
-    gem 'activerecord', '6.0.4.7'
+    gem 'activerecord', '6.0.4.8'
     gem 'database_cleaner-active_record'
   end
 end
@@ -40,9 +40,9 @@ end
 
 # ActiveRecord 5.2
 if current_ruby >= ruby_2_5 and current_ruby < ruby_3_0
-  appraise 'active-record-5-2-7' do
+  appraise 'active-record-5-2-7-1' do
     gem 'sqlite3', '~> 1.3.3'
-    gem 'activerecord', '5.2.7'
+    gem 'activerecord', '5.2.7.1'
     gem 'database_cleaner-active_record'
   end
 end
