@@ -9,7 +9,7 @@
 
 
 [//]: # "###################################################"
-[//]: # "#####                 BADGES                  #####"
+[//]: # "#####             MASTER BADGES               #####"
 [//]: # "###################################################"
 
 [![Space Metric](https://rubology.testspace.com/spaces/159275/metrics/208004/badge?token=f49998769fb94b193c6c14032ca62d1353f8d282)](https://rubology.testspace.com/spaces/159275/current/Code%20Coverage?utm_campaign=badge&utm_medium=referral&utm_source=coverage "Code Coverage (lines)")
@@ -22,6 +22,21 @@
 ![ruby 3.1](https://github.com/Rubology/state_gate/actions/workflows/ruby_3_1.yml/badge.svg?branch=dev)
 
 
+
+
+<!-- [//]: # "###################################################"
+[//]: # "#####               DEV BADGES                #####"
+[//]: # "###################################################"
+
+[![Space Metric](https://rubology.testspace.com/spaces/159275/metrics/208004/badge?token=f49998769fb94b193c6c14032ca62d1353f8d282)](https://rubology.testspace.com/spaces/159275/current/Code%20Coverage?utm_campaign=badge&utm_medium=referral&utm_source=coverage "Code Coverage (lines)")
+[![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](#license)
+
+![ruby 2.5](https://github.com/Rubology/state_gate/actions/workflows/ruby_2_5.yml/badge.svg?branch=dev)
+![ruby 2.6](https://github.com/Rubology/state_gate/actions/workflows/ruby_2_6.yml/badge.svg?branch=dev)
+![ruby 2.7](https://github.com/Rubology/state_gate/actions/workflows/ruby_2_7.yml/badge.svg?branch=dev)
+![ruby 3.0](https://github.com/Rubology/state_gate/actions/workflows/ruby_3_0.yml/badge.svg?branch=dev)
+![ruby 3.1](https://github.com/Rubology/state_gate/actions/workflows/ruby_3_1.yml/badge.svg?branch=dev)
+ -->
 
 
 [//]: # "###################################################"
