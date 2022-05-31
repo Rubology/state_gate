@@ -13,8 +13,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env: # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
+      BUNDLE_GEMFILE: ${{ github.workspace }}/ruby_3_1.gemfile
+
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 50
 
@@ -33,7 +36,6 @@ jobs:
       - uses: testspace-com/setup-testspace@v1
         with:
           domain: ${{ github.repository_owner }}
-          token: ${{ secrets.TESTSPACE_TOKEN }}
       - name: Push result to TestSpace server
         run: |
           testspace ./coverage/coverage.xml
