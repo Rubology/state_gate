@@ -1,3 +1,5 @@
+require './ruby_version'
+
 
 desc "Defaiult task for 'rake', runs 'rspec spec' on latest active_record version."
 task :default do
@@ -8,8 +10,13 @@ end
 
 desc "Runs 'rspec spec' on latest active_record version."
 task :test_latest do
+  puts "\n\n"
+  puts "=====================================\n"
+  puts " Testing Latest ActiveRecord Version"
+  puts "=====================================\n"
+
   latest = `bundle exec appraisal list`.split("\n").first
-  system "bundle exec appraisal #{latest} rspec spec"
+  system "BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle exec appraisal #{latest} rspec spec"
 end
 
 
@@ -23,14 +30,29 @@ end
 
 desc "Runs 'rspec spec' on every version of active_record."
 task :test_all do
-  system "bundle exec appraisal rspec spec"
+  # hide deprecation warnings
+  parts = ["HIDE_DEPRECATIONS=true"]
+
+  # set the gemfile for the current vertsion of ruby
+  parts << "BUNDLE_GEMFILE=#{RubyVersion.gemfile}"
+
+  # run appraisals
+  parts << "bundle exec appraisal rspec spec"
+
+  # runb the command
+  system parts.join(' ')
 end
 
 
 
 desc "Runs 'rspec spec' on every version of active_record."
 task :all do
-  system "bundle exec appraisal rspec spec"
+  puts "\n\n"
+  puts "===================================\n"
+  puts " Testing All ActiveRecord Versions"
+  puts "===================================\n"
+
+  Rake::Task["test_all"].invoke
 end
 
 
@@ -38,9 +60,8 @@ end
 desc "Runs 'rspec spec --tag test' on latest active_record version."
 task :test_tagged do
   latest = `bundle exec appraisal list`.split("\n").first
-  system "bundle exec appraisal #{latest} rspec spec --tag test"
+  system "BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle exec appraisal #{latest} rspec spec --tag test"
 end
-
 
 
 desc "Runs 'rspec spec --tag test' on latest active_record version."
@@ -52,9 +73,38 @@ end
 
 desc "Installs the gems and gemfiles for each version of active_record within 'appraisals'."
 task :install do
+  # NOTE: GitHub Actions require ONLY the :test group gems.
+  #       so they are loaded first, creating the .lock file, which is then frozen
+  #       before loading the :development gems (if using the latest version of Ruby)
+
+
+  puts "\n\n"
+  puts "==================\n"
+  puts " Updating Bundler"
+  puts "==================\n"
   system "gem update bundler"
-  system "bundle install"
-  system "bundle exec appraisal install"
+
+  puts "\n\n"
+  puts "======================\n"
+  puts " Installing Test Gems"
+  puts "======================\n"
+  system "BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle install"
+  system "BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle lock --add-platform x86_64-linux"
+
+  if RubyVersion.latest?
+    puts "\n\n"
+    puts "=============================\n"
+    puts " Installing Development Gems"
+    puts "=============================\n"
+    system "bundle install"
+  end
+
+  puts "\n\n"
+  puts "======================\n"
+  puts " Installing Appraisal"
+  puts "======================\n"
+  system "BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle exec appraisal install"
+  puts "\n\n"
 end
 
 
@@ -69,8 +119,7 @@ end
 
 desc "Generates the Sdoc files & opens them in the default browser."
 task :doc do
-  `sdoc -e "UTF-8" --title 'StateGate' --main README.md -T 'rails' -x 'state_gate/rspec/*' README.md CODE_OF_CONDUCT.md DEVELOPER_GUIDE.md lib`
-  # `open doc/index.html`
+  `sdoc -e "UTF-8" --title 'Sanitized' --main 'README.md' -T 'rails' -x spec -x CHANGELOG.md -x CODE_OF_CONDUCT.md -x DEVELOPER_GUIDE.md -x SECURITY.md`
   `open http://localhost:9292`
 end
 

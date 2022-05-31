@@ -4,6 +4,7 @@
 # = Includes
 # ======================================================================
 
+require './ruby_version'
 require 'rspec/expectations'
 require 'active_record'
 require 'byebug'
@@ -11,32 +12,36 @@ require 'amazing_print'
 require 'database_cleaner/active_record'
 
 
-# Only calculate coverage if we're using the latest version of active_record
-latest         = `bundle exec appraisal list`.split("\n").first
-latest_version = latest.gsub('active-record-', '').gsub('-', '.')
+# Only calculate coverage when latest version of ruby and ActiveRecord
+if RubyVersion.latest?
+  latest         = `bundle exec appraisal list`.split("\n").first
+  latest_version = latest.gsub('active-record-', '').gsub('-', '.')
+  if latest_version == ActiveRecord.gem_version.to_s
+    puts "\nInitializing simplecov"
+    require 'simplecov'
 
-if latest_version == ActiveRecord.gem_version.to_s
-  require 'simplecov'
+    SimpleCov.configure do
+      # exclude tests
+      add_filter 'spec'
+    end
 
-  SimpleCov.configure do
-    # exclude tests
-    add_filter 'spec'
+    # set output to Coberatura XML if using Testspace analysis
+    if ENV['FOR_TESTSPACE']
+      require 'simplecov-cobertura'
+      SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
+    end
+
+    # start it up
+    SimpleCov.start
   end
-
-  # set output to Coberatura XML if using Testspace analysis
-  if ENV['FOR_TESTSPACE']
-    require 'simplecov-cobertura'
-    SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
-  end
-
-  # start it up
-  SimpleCov.start
 end
 
 
 # require AFTER simpleCOv has started to ensure inclusion in metrics
 require_relative '../lib/state_gate'
 require_relative '../lib/state_gate/rspec'
+
+
 
 # ======================================================================
 #  Report the Version
@@ -50,6 +55,17 @@ puts '=' * (msg.size + 4)
 puts "\n  #{msg}\n\n"
 puts '=' * (msg.size + 4)
 puts "\n\n"
+
+
+
+# ======================================================================
+#  Hide Deprecation Warnings
+# ======================================================================
+
+# silence all warnings when bulk testing with 'rake all'
+if ENV['HIDE_DEPRECATIONS']
+  ActiveSupport::Deprecation.behavior = :silence
+end
 
 
 
