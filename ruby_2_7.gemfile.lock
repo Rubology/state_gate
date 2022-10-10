@@ -25,6 +25,7 @@ GEM
     thor (1.2.1)
 
 PLATFORMS
+  arm64-darwin-21
   x86_64-darwin-20
   x86_64-linux
 
@@ -36,4 +37,4 @@ DEPENDENCIES
   rspec (~> 3.0)
 
 BUNDLED WITH
-   2.3.14
+   2.3.23

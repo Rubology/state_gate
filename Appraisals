@@ -19,6 +19,7 @@ end
 # ActiveRecord 6.1
 if RubyVersion >= 2.5
   appraise 'active-record-6-1-7' do
+    gem 'minitest', '5.15.0'
     gem 'sqlite3', '~> 1.4.0'
     gem 'activerecord', '6.1.7'
     gem 'database_cleaner-active_record'    

@@ -8,7 +8,7 @@
 4. Change to the most recent version of Ruby
 5. Install the most recent Bundler: `gem install bundler`
 6. Install the most recent Rake: `gem install rake`
-7. Install the dependencies: `rake install` (this will take a while!)
+7. Install the gems: `rake install` (this will take a while!)
 8. Ensure all the tests are passing: `rake test_all`
 
 
@@ -99,6 +99,16 @@ instructs Appraisal to use the latest ActiveRecord version...
 We use [Appraisal](http://github.com/thoughtbot/appraisal) to run tests
 against each individual version of ActiveRecord that the gem supports.
 
+
+
+
+## Bundling
+
+We test with the latest minor version of every Ruby from 2.5 onwards. As some gems are only
+available for certain Ruby versions, we need to use seperate Gemfiles for each version.
+
+The task `rake install` will automatically select the correct gemfile to use and install the gems.
+It also adds the `x86_64-linux` platform to the lockfile.
 
 
 
