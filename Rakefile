@@ -16,7 +16,7 @@ task :test_latest do
   puts "=====================================\n"
 
   latest = `bundle exec appraisal list`.split("\n").first
-  system "BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle exec appraisal #{latest} rspec spec"
+  system "BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle _2.3.26_ exec appraisal #{latest} rspec spec"
 end
 
 
@@ -37,7 +37,7 @@ task :test_all do
   parts << "BUNDLE_GEMFILE=#{RubyVersion.gemfile}"
 
   # run appraisals
-  parts << "bundle exec appraisal rspec spec"
+  parts << "bundle _2.3.26_ exec appraisal rspec spec"
 
   # runb the command
   system parts.join(' ')
@@ -60,7 +60,7 @@ end
 desc "Runs 'rspec spec --tag test' on latest active_record version."
 task :test_tagged do
   latest = `bundle exec appraisal list`.split("\n").first
-  system "BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle exec appraisal #{latest} rspec spec --tag test"
+  system "BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle _2.3.26_ exec appraisal #{latest} rspec spec --tag test"
 end
 
 
@@ -77,21 +77,22 @@ task :install do
   puts "==================\n"
   puts " Updating Bundler"
   puts "==================\n"
-  system "gem update bundler"
+  # system "gem update bundler"
+  system "gem install bundler:2.3.26"
 
   puts "\n\n"
   puts "======================\n"
   puts " Installing Gems"
   puts "======================\n"
   puts "Using '#{RubyVersion.gemfile}'\n\n"
-  system "BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle install"
-  system "BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle lock --add-platform x86_64-linux"
+  system "BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle _2.3.26_ install"
+  system "BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle _2.3.26_ lock --add-platform x86_64-linux"
 
   puts "\n\n"
   puts "======================\n"
   puts " Installing Appraisal"
   puts "======================\n"
-  system "BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle exec appraisal install"
+  system "BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle _2.3.26_ exec appraisal install"
   puts "\n\n"
 end
 
@@ -99,8 +100,8 @@ end
 
 desc "Outputs the terminal command to run 'rspec spec' on the latest version of active_record."
 task :spec_command do
-  latest = `bundle exec appraisal list`.split("\n").first
-  puts "\nbundle exec appraisal #{latest} rspec spec/\n\n"
+  latest = `bundle _2.3.26_ exec appraisal list`.split("\n").first
+  puts "\nbundle _2.3.26_ exec appraisal #{latest} rspec spec/\n\n"
 end
 
 
@@ -146,7 +147,7 @@ task :rubo do
                   'Layout/EmptyLinesAroundModuleBody',
                   'Layout/EmptyLineBetweenDefs'
                 ]
-  system "bundle exec rubocop --auto-correct --only #{corrections.join(',')} lib/"
+  system "bundle _2.3.26_ exec rubocop --auto-correct --only #{corrections.join(',')} lib/"
 end
 
 
@@ -154,4 +155,16 @@ end
 desc "Validate the .codecov.yml file"
 task :validate_codecov do
   system "cat .codecov.yml | curl --data-binary @- https://codecov.io/validate"
+end
+
+
+
+desc "Return the commnad needed to run bundler for the current gemfile"
+task :bundler do
+  puts "\n\n"
+  puts "=================\n"
+  puts " Bundler Command"
+  puts "=================\n\n"
+  puts  "BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle _2.3.26_ "
+  puts "\n\n"
 end

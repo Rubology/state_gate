@@ -6,7 +6,7 @@ module RubyVersion
 
 		# Returns the latest known version of Ruby
 		def latest_version
-			Gem::Version.new('3.1')
+			Gem::Version.new('3.2')
 		end
 
 		

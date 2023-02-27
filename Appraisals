@@ -7,7 +7,7 @@ require './ruby_version'
 # ActiveRecord 7.0
 if RubyVersion >= 2.7
   appraise 'active-record-7-0-4' do
-    gem 'sqlite3', '~> 1.4.0'
+    gem 'sqlite3', '~> 1.4.4'
     gem 'activerecord', '7.0.4'
     gem 'database_cleaner-active_record'
     gem 'simplecov'
