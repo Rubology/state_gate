@@ -184,4 +184,9 @@ Cops can be run with: `rake rubo`
 `rake rubo`
 
 
+> Display the command for Bundler with the correct gemfile for the current ruby version.
+
+`rake bundler`
+
+
 
