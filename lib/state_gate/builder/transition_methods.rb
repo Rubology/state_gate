@@ -35,7 +35,7 @@ module StateGate
       ##
       # Add instance methods to the klass that query the allowed transitions
       #
-      def generate_transition_methods
+      def _generate_transition_methods
         _add__klass__attr_transitions
         _add__klass__attr_transitions_for
 
@@ -72,7 +72,7 @@ module StateGate
       def _add__klass__attr_transitions(method_name = @attribute)
         method_name = "#{method_name}_transitions"
 
-        add__klass__helper_method(method_name, __FILE__, __LINE__ - 2, %(
+        _add__klass__helper_method(method_name, __FILE__, __LINE__ - 2, %(
           def #{method_name}
             stateables[:#{@attribute}].transitions
           end
@@ -96,7 +96,7 @@ module StateGate
       def _add__klass__attr_transitions_for(method_name = @attribute)
         method_name = "#{method_name}_transitions_for"
 
-        add__klass__helper_method(method_name, __FILE__, __LINE__ - 2, %(
+        _add__klass__helper_method(method_name, __FILE__, __LINE__ - 2, %(
           def #{method_name}(state)
             stateables[:#{@attribute}].transitions_for_state(state)
           end
@@ -125,7 +125,7 @@ module StateGate
       def _add__instance__attr_transitions(method_name = @attribute)
         method_name = "#{method_name}_transitions"
 
-        add__instance__helper_method(method_name, __FILE__, __LINE__ - 2, %(
+        _add__instance__helper_method(method_name, __FILE__, __LINE__ - 2, %(
           def #{method_name}
             stateables[:#{@attribute}].transitions_for_state(self[:#{@attribute}])
           end
@@ -148,7 +148,7 @@ module StateGate
       def _add__instance__attr_transitions_to(method_name = @attribute)
         method_name = "#{method_name}_transitions_to?"
 
-        add__instance__helper_method(method_name, __FILE__, __LINE__ - 2, %(
+        _add__instance__helper_method(method_name, __FILE__, __LINE__ - 2, %(
           def #{method_name}(query_state)
             test_state = StateGate.symbolize(query_state)
             stateables[:#{@attribute}].transitions_for_state(self[:#{@attribute}])

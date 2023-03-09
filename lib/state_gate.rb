@@ -178,7 +178,7 @@ module StateGate
       ar_included = base.ancestors.include?(::ActiveRecord::Base)
       fail I18n.t('state_gate.included_err', base: base.name) unless ar_included
 
-      generate_state_gate_method_for(base)
+      _generate_state_gate_method_for(base)
     end
     private_class_method :included
 
@@ -207,7 +207,7 @@ module StateGate
     # @param [Class]
     #   the Class the _state-gate_ is being attached to
     #
-    def generate_state_gate_method_for(klass)
+    def _generate_state_gate_method_for(klass)
       klass.define_singleton_method(:state_gate) do |attr_name = nil, &block|
         # Note: the builder does all it's work on initialize, so nothing more
         # to do here.

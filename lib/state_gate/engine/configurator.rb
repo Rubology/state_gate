@@ -97,18 +97,18 @@ module StateGate
       # - verify all transitions lead to existing states
       # - verify each state, except the default, can be reached from a transition
       #
-      def parse_configuration(&config)
-        exec_configuration(&config)
+      def _parse_configuration(&config)
+        _exec_configuration(&config)
 
         generate_sequences
         generate_scope_names
 
-        assert_states_are_valid
-        assert_transitions_exist
-        assert_uniq_transitions
-        assert_any_has_been_expanded
-        assert_all_transitions_are_states
-        assert_all_states_are_reachable
+        _assert_states_are_valid
+        _assert_transitions_exist
+        _assert_uniq_transitions
+        _assert_any_has_been_expanded
+        _assert_all_transitions_are_states
+        _assert_all_states_are_reachable
       end
 
 
@@ -129,13 +129,13 @@ module StateGate
       # - verify all transitions lead to existing states
       # - verify each state, except the default, can be reached from a transition
       #
-      def exec_configuration(&config)
+      def _exec_configuration(&config)
         instance_exec(&config)
       rescue NameError => e
         err_command = e.to_s.gsub('undefined local variable or method `', '')
                        .split("'")
                        .first
-        cerr :bad_command, cmd: err_command
+        _cerr :bad_command, cmd: err_command
       end
 
 
@@ -148,18 +148,18 @@ module StateGate
       # Ensure there are enough states and the default is a valid state, setting
       # the default to the first state if required.
       #
-      def assert_states_are_valid
+      def _assert_states_are_valid
         state_names = @states.keys
 
         # are there states
-        cerr(:states_missing_err) if state_names.blank?
+        _cerr(:states_missing_err) if state_names.blank?
 
         # is there more than one state
-        cerr(:single_state_err) if state_names.one?
+        _cerr(:single_state_err) if state_names.one?
 
         # set the deafult state if needed, otherwise check it is a valid state
         if @default
-          cerr(:default_state_err) unless state_names.include?(@default)
+          _cerr(:default_state_err) unless state_names.include?(@default)
         else
           @default = state_names.first
         end
@@ -172,7 +172,7 @@ module StateGate
       # to allow every stater to transition to another state and flag the engine as
       # transitionless, so we don't add any validation methods.
       #
-      def assert_transitions_exist
+      def _assert_transitions_exist
         return if @states.map { |_state, opts| opts[:transitions_to] }.uniq.flatten.any?
 
         @transitionless = true
@@ -186,7 +186,7 @@ module StateGate
       ##
       # Ensure that there is only one of reach transition
       #
-      def assert_uniq_transitions
+      def _assert_uniq_transitions
         @states.each { |_state, opts| opts[:transitions_to].uniq! }
       end
 
@@ -195,13 +195,13 @@ module StateGate
       ##
       # Ensure that the :any transition is expanded or raise an exception
       # if it's included with other transitions
-      def assert_any_has_been_expanded
+      def _assert_any_has_been_expanded
         @states.each do |state_name, opts|
           if opts[:transitions_to] == [:any]
             @states[state_name][:transitions_to] = @states.keys - [state_name]
 
           elsif opts[:transitions_to].include?(:any)
-            cerr(:any_transition_err, state: state_name, kattr: true)
+            _cerr(:any_transition_err, state: state_name, kattr: true)
           end
         end
       end
@@ -214,11 +214,11 @@ module StateGate
       # Replaces transition to :any with a list of all states
       # Raises an exception if :any in included with a list of other transitions
       #
-      def assert_all_transitions_are_states
+      def _assert_all_transitions_are_states
         @states.each do |state_name, opts|
           opts[:transitions_to].each do |transition|
             unless @states.keys.include?(transition)
-              cerr(:transition_state_err, state: state_name, transition: transition, kattr: true)
+              _cerr(:transition_state_err, state: state_name, transition: transition, kattr: true)
             end
           end
         end
@@ -229,14 +229,14 @@ module StateGate
       ##
       # Ensure there is a transition leading to every non-default state.
       #
-      def assert_all_states_are_reachable
+      def _assert_all_states_are_reachable
         # is there a transition to every state except the default.
         transitions   = @states.map { |_state, opts| opts[:transitions_to] }.flatten.uniq
         adrift_states = (@states.keys - transitions - [@default])
         return if adrift_states.blank?
 
         states = adrift_states.map { |s| ':' + s.to_s }.to_sentence
-        cerr(:transitionless_states_err, states: states, kattr: true)
+        _cerr(:transitionless_states_err, states: states, kattr: true)
       end
 
     end # ConfigurationMethods

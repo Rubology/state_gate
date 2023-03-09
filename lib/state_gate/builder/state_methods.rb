@@ -49,9 +49,9 @@ module StateGate
       ##
       # Add Class and instance methods that allow querying states
       #
-      def generate_state_methods
-        add_state_attribute_methods
-        add_state_alias_methods
+      def _generate_state_methods
+        _add_state_attribute_methods
+        _add_state_alias_methods
       end
 
 
@@ -59,7 +59,7 @@ module StateGate
       ##
       # add attribute methods
       #
-      def add_state_attribute_methods
+      def _add_state_attribute_methods
         _add__klass__attrs
         _add__klass__human_attrs
         _add__klass__attrs_for_select
@@ -77,7 +77,7 @@ module StateGate
       ##
       # add alias methods
       #
-      def add_state_alias_methods
+      def _add_state_alias_methods
         return unless @alias
 
         _add__klass__attrs(@alias)
@@ -107,7 +107,7 @@ module StateGate
       def _add__klass__attrs(method_name = @attribute)
         method_name = method_name.to_s.pluralize
 
-        add__klass__helper_method(method_name, __FILE__, __LINE__ - 2, %(
+        _add__klass__helper_method(method_name, __FILE__, __LINE__ - 2, %(
           def #{method_name}
             stateables[:#{@attribute}].states
           end
@@ -130,7 +130,7 @@ module StateGate
       def _add__klass__human_attrs(method_name = @attribute)
         method_name = "human_#{method_name.to_s.pluralize}"
 
-        add__klass__helper_method(method_name, __FILE__, __LINE__ - 2, %(
+        _add__klass__helper_method(method_name, __FILE__, __LINE__ - 2, %(
           def #{method_name}
             stateables[:#{@attribute}].human_states
           end
@@ -168,7 +168,7 @@ module StateGate
       def _add__klass__attrs_for_select(method_name = @attribute)
         method_name = "#{method_name.to_s.pluralize}_for_select"
 
-        add__klass__helper_method(method_name, __FILE__, __LINE__ - 2, %(
+        _add__klass__helper_method(method_name, __FILE__, __LINE__ - 2, %(
           def #{method_name}(sorted = false)
             stateables[:#{@attribute}].states_for_select(sorted)
           end
@@ -193,7 +193,7 @@ module StateGate
       def _add__instance__attrs(method_name = @attribute)
         method_name = method_name.to_s.pluralize
 
-        add__instance__helper_method(method_name, __FILE__, __LINE__ - 2, %(
+        _add__instance__helper_method(method_name, __FILE__, __LINE__ - 2, %(
           def #{method_name}
             stateables[:#{@attribute}].states
           end
@@ -215,7 +215,7 @@ module StateGate
       def _add__instance__human_attrs(method_name = @attribute)
         method_name = "human_#{method_name.to_s.pluralize}"
 
-        add__instance__helper_method(method_name, __FILE__, __LINE__ - 2, %(
+        _add__instance__helper_method(method_name, __FILE__, __LINE__ - 2, %(
           def #{method_name}
             stateables[:#{@attribute}].human_states
           end
@@ -231,7 +231,7 @@ module StateGate
       def _add__instance__human_attr(method_name = @attribute)
         method_name = "human_#{method_name.to_s}"
 
-        add__instance__helper_method(method_name, __FILE__, __LINE__ - 2, %(
+        _add__instance__helper_method(method_name, __FILE__, __LINE__ - 2, %(
           def #{method_name}
             stateables[:#{@attribute}].human_state_for(#{@attribute})
           end
@@ -252,7 +252,7 @@ module StateGate
         @engine.states.each do |state|
           method_name = "#{@engine.scope_name_for_state(state)}?"
 
-          add__instance__helper_method(method_name, __FILE__, __LINE__ - 3, %(
+          _add__instance__helper_method(method_name, __FILE__, __LINE__ - 3, %(
             def #{method_name}
               self[:#{@attribute}] == :#{state}.to_s
             end
@@ -274,7 +274,7 @@ module StateGate
         @engine.states.each do |state|
           method_name = "not_#{@engine.scope_name_for_state(state)}?"
 
-          add__instance__helper_method(method_name, __FILE__, __LINE__ - 3, %(
+          _add__instance__helper_method(method_name, __FILE__, __LINE__ - 3, %(
             def #{method_name}
               self[:#{@attribute}] != :#{state}.to_s
             end
@@ -313,7 +313,7 @@ module StateGate
       def _add__instance__attrs_for_select(method_name = @attribute)
         method_name = "#{method_name.to_s.pluralize}_for_select"
 
-        add__instance__helper_method(method_name, __FILE__, __LINE__ - 2, %(
+        _add__instance__helper_method(method_name, __FILE__, __LINE__ - 2, %(
           def #{method_name}(sorted = false)
             stateables[:#{@attribute}].states_for_select(sorted)
          end

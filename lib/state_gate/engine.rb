@@ -47,16 +47,16 @@ module StateGate
     #   end
     #
     def initialize(klass, attribute, &config)
-      aerror(:klass_type_err)            unless klass.respond_to?(:to_s)
-      aerror(:attribute_type_err)        unless attribute.is_a?(Symbol)
-      aerror(:missing_config_block_err)  unless block_given?
+      _aerror(:klass_type_err)            unless klass.respond_to?(:to_s)
+      _aerror(:attribute_type_err)        unless attribute.is_a?(Symbol)
+      _aerror(:missing_config_block_err)  unless block_given?
 
       @klass     = klass
       @attribute = StateGate.symbolize(attribute)
 
-      set_defaults
+      _set_defaults
 
-      parse_configuration(&config)
+      _parse_configuration(&config)
     end
 
 
@@ -64,7 +64,7 @@ module StateGate
     ##
     # Set the class variables with default values
     #
-    def set_defaults
+    def _set_defaults
       @states         = {}
       @default        = nil
       @prefix         = nil

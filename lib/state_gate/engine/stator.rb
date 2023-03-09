@@ -32,11 +32,11 @@ module StateGate
       #
       def state(name, opts = {})
         name = StateGate.symbolize(name)
-        assert_valid_state_name(name)
-        assert_valid_opts(opts, name)
+        _assert_valid_state_name(name)
+        _assert_valid_opts(opts, name)
 
         # add the state
-        @states[name] = state_template.merge({ human: opts[:human] || name.to_s.titleize })
+        @states[name] = _state_template.merge({ human: opts[:human] || name.to_s.titleize })
 
         # add the state transitions
         Array(opts[:transitions_to]).each do |transition|
@@ -56,8 +56,8 @@ module StateGate
       #   default :state_name
       #
       def default(default_state = nil)
-        cerr(:default_type_err, kattr: true) unless default_state.is_a?(Symbol)
-        cerr(:default_repeat_err, kattr: true) if   @default
+        _cerr(:default_type_err, kattr: true) unless default_state.is_a?(Symbol)
+        _cerr(:default_repeat_err, kattr: true) if   @default
         @default = StateGate.symbolize(default_state)
       end
 
@@ -105,7 +105,7 @@ module StateGate
       def assert_valid_state!(value)
         state_name                      = StateGate.symbolize(value)
         unforced_state                  = state_name.to_s.remove(/^force_/).to_sym
-        invalid_state_error(value) unless @states.keys.include?(unforced_state)
+        _invalid_state_error(value) unless @states.keys.include?(unforced_state)
         state_name
       end
 
@@ -212,7 +212,7 @@ module StateGate
       # @return [Hash]
       #   of the state keys defined.
       #
-      def state_template
+      def _state_template
         {
           transitions_to: [],
           previous_state: nil,
@@ -234,11 +234,11 @@ module StateGate
       # @raise [AygumentError]
       #   if the state name is invalid
       #
-      def assert_valid_state_name(name)
-        cerr(:state_type_err, kattr: true) unless name.is_a?(Symbol)
-        cerr(:state_repeat_err, state: name, kattr: true)     if @states.key?(name)
-        cerr(:state_not_name_err, state: name, kattr: true)   if name.to_s.start_with?('not_')
-        cerr(:state_force_name_err, state: name, kattr: true) if name.to_s.start_with?('force_')
+      def _assert_valid_state_name(name)
+        _cerr(:state_type_err, kattr: true) unless name.is_a?(Symbol)
+        _cerr(:state_repeat_err, state: name, kattr: true)     if @states.key?(name)
+        _cerr(:state_not_name_err, state: name, kattr: true)   if name.to_s.start_with?('not_')
+        _cerr(:state_force_name_err, state: name, kattr: true) if name.to_s.start_with?('force_')
       end
 
 
@@ -255,14 +255,14 @@ module StateGate
       # @raise [ArgumentError]
       #   if any invalid options
       #
-      def assert_valid_opts(opts, state_name)
+      def _assert_valid_opts(opts, state_name)
         unless opts.keys.reject { |k| k.is_a?(Symbol) }.blank?
-          cerr(:state_opts_key_type_err, state: state_name, kattr: true)
+          _cerr(:state_opts_key_type_err, state: state_name, kattr: true)
         end
 
         return if Array(opts[:transitions_to]).reject { |k| k.is_a?(Symbol) }.blank?
 
-        cerr(:transition_key_type_err, state: state_name, kattr: true)
+        _cerr(:transition_key_type_err, state: state_name, kattr: true)
       end
 
     end # Stater

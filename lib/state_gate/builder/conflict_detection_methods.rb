@@ -27,14 +27,14 @@ module StateGate
       # @raise [ConflictError]
       #   if the method name has already been defined
       #
-      def detect_class_method_conflict!(method_name)
+      def _detect_class_method_conflict!(method_name)
         defining_klass = _active_record_protected_method?(method_name) ||
                          _klass_singleton_method?(method_name) ||
                          _klass_ancestor_singleton_method?(method_name)
 
         return unless defining_klass
 
-        raise_conflict_error method_name, type: 'a class', source: defining_klass
+        _raise_conflict_error method_name, type: 'a class', source: defining_klass
       end
 
 
@@ -52,14 +52,14 @@ module StateGate
       # @raise [ConflictError]
       #   if the method name has already been defined
       #
-      def detect_instance_method_conflict!(method_name)
+      def _detect_instance_method_conflict!(method_name)
         defining_klass = _active_record_protected_method?(method_name) ||
                          _klass_instance_method?(method_name) ||
                          _klass_ancestor_instance_method?(method_name)
 
         return unless defining_klass
 
-        raise_conflict_error method_name, source: defining_klass
+        _raise_conflict_error method_name, source: defining_klass
       end
 
 
@@ -80,7 +80,7 @@ module StateGate
       #     StateGate for Klass#attribute will generate a class
       #     method 'statuses', which is already defined by ActiveRecord.
       #
-      def raise_conflict_error(method_name, type: 'an instance', source: 'ActiveRecord')
+      def _raise_conflict_error(method_name, type: 'an instance', source: 'ActiveRecord')
         fail StateGate::ConflictError, I18n.t('state_gate.builder.conflict_err',
                                               klass:       @klass,
                                               attribute:   @attribute,

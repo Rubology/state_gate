@@ -30,7 +30,7 @@ module StateGate
       # @note
       #   The scope name is a concatenation of <prefix><state name><suffix>
       #
-      def generate_scope_methods
+      def _generate_scope_methods
         return unless @engine.include_scopes?
 
         _add__klass__state_scopes
@@ -58,7 +58,7 @@ module StateGate
 
         @engine.states.each do |state|
           scope_name = @engine.scope_name_for_state(state)
-          detect_class_method_conflict! scope_name
+          _detect_class_method_conflict! scope_name
           @klass.scope(scope_name, -> { where(attr_name => state) })
         end # each state
       end # _add__klass__state_scopes
@@ -77,7 +77,7 @@ module StateGate
 
         @engine.states.each do |state|
           scope_name = @engine.scope_name_for_state(state)
-          detect_class_method_conflict! "not_#{scope_name}"
+          _detect_class_method_conflict! "not_#{scope_name}"
           @klass.scope "not_#{scope_name}", -> { where.not(attr_name => state) }
         end # each state
       end # _add__klass__not_state_scopes
@@ -97,7 +97,7 @@ module StateGate
         attr_name   = @attribute
         method_name = "with_#{method_name.to_s.pluralize}"
 
-        detect_class_method_conflict! method_name
+        _detect_class_method_conflict! method_name
         @klass.scope method_name, ->(states) { where(attr_name => Array(states)) }
       end # _add__klass__with_attrs_scope
 

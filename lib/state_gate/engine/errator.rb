@@ -23,14 +23,14 @@ module StateGate
       #
       # @raise [ArgumentError]
       #
-      def invalid_state_error(val)
+      def _invalid_state_error(val)
         case val
         when NilClass
-          aerr :invalid_state_err, val: "'nil'", kattr: true
+          _aerr :invalid_state_err, val: "'nil'", kattr: true
         when Symbol
-          aerr :invalid_state_err, val: ":#{val}", kattr: true
+          _aerr :invalid_state_err, val: ":#{val}", kattr: true
         else
-          aerr :invalid_state_err, val: "'#{val&.to_s}'", kattr: true
+          _aerr :invalid_state_err, val: "'#{val&.to_s}'", kattr: true
         end
       end
 
@@ -47,7 +47,7 @@ module StateGate
       #
       # @raise [ConfigurationError]
       #
-      def cerr(err, **args)
+      def _cerr(err, **args)
         args[:kattr] = "#{@klass}##{@attribute}" if args[:kattr] == true
         key          = "state_gate.engine.config.#{err}"
         fail ConfigurationError, I18n.t(key, **args)
@@ -66,7 +66,7 @@ module StateGate
       #
       # @raise [RuntimeError]
       #
-      def rerr(err, **args)
+      def _rerr(err, **args)
         args[:kattr] = "#{@klass}##{@attribute}" if args[:kattr] == true
         key          = "state_gate.engine.#{err}"
         fail I18n.t(key, **args)
@@ -85,7 +85,7 @@ module StateGate
       #
       # @raise [ArgumentError]
       #
-      def aerr(err, **args)
+      def _aerr(err, **args)
         args[:kattr] = "#{@klass}##{@attribute}" if args[:kattr] == true
         key          = "state_gate.engine.#{err}"
         fail ArgumentError, I18n.t(key, **args)

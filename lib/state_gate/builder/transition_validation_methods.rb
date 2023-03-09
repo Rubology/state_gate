@@ -82,7 +82,7 @@ module StateGate
       #   "update_columns(<attr>: val)" cover all the possibilities of setting the
       #   attribute through ActiveRecord.
       #
-      def generate_transition_validation_methods
+      def _generate_transition_validation_methods
         return if @engine.transitionless?
 
         _prepend__attribute_equals

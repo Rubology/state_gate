@@ -14,35 +14,35 @@ RSpec.describe "Engine Errator" do
     end
   end
 
-  it "#cerr returns a ConfigurationError" do
-    expect{eng.send(:cerr, :prefix_type_err)}
+  it "#_cerr returns a ConfigurationError" do
+    expect{eng.send(:_cerr, :prefix_type_err)}
       .to raise_error StateGate::ConfigurationError
   end
 
-  it "#rerr returns a RuntimeError" do
-    expect{eng.send(:rerr, :klass_type_err)}
+  it "#_rerr returns a RuntimeError" do
+    expect{eng.send(:_rerr, :klass_type_err)}
       .to raise_error RuntimeError
   end
 
-  it "#aerr returns an ArgumentError" do
-    expect{eng.send(:aerr, :klass_type_err)}
+  it "#_aerr returns an ArgumentError" do
+    expect{eng.send(:_aerr, :klass_type_err)}
       .to raise_error ArgumentError
   end
 
 
-  context "#invalid_state_error" do
+  context "#_invalid_state_error" do
     it "returns a formated error for 'nil'" do
-      expect{eng.send(:invalid_state_error, nil)}
+      expect{eng.send(:_invalid_state_error, nil)}
         .to raise_error ArgumentError, "'nil' is not valid state for EngineTest#status."
     end
 
     it "returns a formated error for a Symbol" do
-      expect{eng.send(:invalid_state_error, :dummy)}
+      expect{eng.send(:_invalid_state_error, :dummy)}
         .to raise_error ArgumentError, ":dummy is not valid state for EngineTest#status."
     end
 
     it "returns a formated error for a String" do
-      expect{eng.send(:invalid_state_error, 'dummy')}
+      expect{eng.send(:_invalid_state_error, 'dummy')}
         .to raise_error ArgumentError, "'dummy' is not valid state for EngineTest#status."
     end
   end

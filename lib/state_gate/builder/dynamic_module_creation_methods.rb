@@ -105,8 +105,8 @@ module StateGate
       # @param [String] method_body
       #   a String to be evaluated in the module
       #
-      def add__klass__helper_method(method_name, file, line, method_body)
-        detect_class_method_conflict!(method_name)
+      def _add__klass__helper_method(method_name, file, line, method_body)
+        _detect_class_method_conflict!(method_name)
         @klass.instance_eval(method_body, file, line)
       end
 
@@ -124,8 +124,8 @@ module StateGate
       # @param [String] method_body
       #   a String to bhe evaluates in the module
       #
-      def add__instance__helper_method(method_name, file, line, method_body)
-        detect_instance_method_conflict!(method_name)
+      def _add__instance__helper_method(method_name, file, line, method_body)
+        _detect_instance_method_conflict!(method_name)
         _helper_methods_module.module_eval(method_body, file, line)
       end
 

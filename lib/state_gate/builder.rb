@@ -69,19 +69,19 @@ module StateGate
       _cast_attribute_as_state_gate
 
       # generate the helper methods
-      generate_helper_methods
+      _generate_helper_methods
     end
 
 
 
     # Generate the helper methods
     #
-    def generate_helper_methods
+    def _generate_helper_methods
       # add the helper methods
-      generate_scope_methods
-      generate_state_methods
-      generate_transition_methods
-      generate_transition_validation_methods
+      _generate_scope_methods
+      _generate_state_methods
+      _generate_transition_methods
+      _generate_transition_validation_methods
 
       # warn if any state gate attribute methods are redefined
       _generate_method_redefine_detection

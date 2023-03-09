@@ -79,7 +79,7 @@ module StateGate
         return true if to_state.to_s.start_with?('force_')
         return true if @states[from_state][:transitions_to].include?(to_state)
 
-        aerr(:invalid_state_transition_err, from: from_state, to: to_state, kattr: true)
+        _aerr(:invalid_state_transition_err, from: from_state, to: to_state, kattr: true)
       end
 
     end # Sequencer

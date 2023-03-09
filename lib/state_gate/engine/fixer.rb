@@ -24,8 +24,8 @@ module StateGate
       #   prefix :before  #=> Class.before_active
       #
       def prefix(val = nil)
-        cerr(:prefix_type_err, kattr: true) unless val.is_a?(Symbol)
-        cerr(:prefix_multiple_err, kattr: true) if @prefix
+        _cerr(:prefix_type_err, kattr: true) unless val.is_a?(Symbol)
+        _cerr(:prefix_multiple_err, kattr: true) if @prefix
         @prefix = "#{val.to_s.downcase}_"
       end # prefix
 
@@ -41,8 +41,8 @@ module StateGate
       #   suffix :after  #=> Class.active_after
       #
       def suffix(val = nil)
-        cerr(:suffix_type_err, kattr: true) unless val.is_a?(Symbol)
-        cerr(:suffix_multiple_err, kattr: true) if @suffix
+        _cerr(:suffix_type_err, kattr: true) unless val.is_a?(Symbol)
+        _cerr(:suffix_multiple_err, kattr: true) if @suffix
         @suffix = "_#{val.to_s.downcase}"
       end # suffix
 
