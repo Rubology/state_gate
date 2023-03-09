@@ -8,21 +8,21 @@ module StateGate
     # Multiple private methods allowing StateGate::Builder to generate
     # transition methods.
     #
-    # * query the class for all allowed transitions:
-    #     Klass.status_transitions  # =>  { pending:   [:active],
-    #                               #       active:    [:suspended, :archived],
-    #                               #       suspended: [:active, :archived],
-    #                               #       archived:  [] }
+    # - query the class for all allowed transitions:
+    #     Klass.status_transitions  #=>  { pending:   [:active],
+    #                                      active:    [:suspended, :archived],
+    #                                      suspended: [:active, :archived],
+    #                                      archived:  [] }
     #
-    # * query the class for the allowed transitions for the given state:
-    #     Klass.status_transitions_for(:pending)  # =>  [:active]
-    #     Klass.status_transitions_for(:active)   # =>  [:suspended, :archived]
+    # - query the class for the allowed transitions for the given state:
+    #     Klass.status_transitions_for(:pending)  #=>  [:active]
+    #     Klass.status_transitions_for(:active)   #=>  [:suspended, :archived]
     #
-    # * list the allowed transitions from the current state:
-    #     .status_transitions  # =>  [:suspended, :archived]
+    # - list the allowed transitions from the current state:
+    #     .status_transitions  #=>  [:suspended, :archived]
     #
-    # * query if a given transition is allowed from the current state:
-    #     .status_transitions_to?(:active)  # =>  true
+    # - query if a given transition is allowed from the current state:
+    #     .status_transitions_to?(:active)  #=>  true
     #
     module TransitionMethods
 
@@ -32,6 +32,7 @@ module StateGate
 
 
 
+      ##
       # Add instance methods to the klass that query the allowed transitions
       #
       def generate_transition_methods
@@ -56,12 +57,17 @@ module StateGate
       #  Class methods
       # ======================================================================
 
+      ##
       # Adds a Class method to return a Hash of the allowed transitions for the attribte
-      #   eg:
-      #       Klass.status_transitions  # =>  { pending:   [:active],
-      #                                         active:    [:suspended, :archived],
-      #                                         suspended: [:active, :archived],
-      #                                         archived:  [] }
+      #
+      # @param [Symbol] method_name
+      #   the name for the new method
+      #
+      # @example
+      #   Klass.status_transitions  #=>  { pending:   [:active],
+      #                                     active:    [:suspended, :archived],
+      #                                     suspended: [:active, :archived],
+      #                                     archived:  [] }
       #
       def _add__klass__attr_transitions(method_name = @attribute)
         method_name = "#{method_name}_transitions"
@@ -75,12 +81,17 @@ module StateGate
 
 
 
+      ##
       # Adds a Class method to return an Array of the allowed attribute transitions for
       # the provided state.
-      #   eg:
-      #       Klass.status_transitions_for(:pending) # =>  [:active]
-      #       Klass.status_transitions_for(:active)  # =>  [:suspended, :archived]
-      #       Klass.status_transitions_for(:dummy)   # =>  ArgumentError
+      #
+      # @param [Symbol] method_name
+      #   the name for the new method
+      #
+      # @example
+      #   Klass.status_transitions_for(:pending) #=>  [:active]
+      #   Klass.status_transitions_for(:active)  #=>  [:suspended, :archived]
+      #   Klass.status_transitions_for(:dummy)   #=>  ArgumentError
       #
       def _add__klass__attr_transitions_for(method_name = @attribute)
         method_name = "#{method_name}_transitions_for"
@@ -99,12 +110,17 @@ module StateGate
       # ======================================================================
 
 
+      ##
       # Adds an instance method to return an Array of the allowed transitions from
       # the current attribute state.
-      #   eg:
-      #       .status_transitions  # =>  [:active]
-      #       .status_transitions  # =>  [:suspended, :archived]
-      #       .status_transitions  # =>  []
+      #
+      # @param [Symbol] method_name
+      #   the name for the new method
+      #
+      # @example
+      #   .status_transitions  #=>  [:active]
+      #   .status_transitions  #=>  [:suspended, :archived]
+      #   .status_transitions  #=>  []
       #
       def _add__instance__attr_transitions(method_name = @attribute)
         method_name = "#{method_name}_transitions"
@@ -118,11 +134,16 @@ module StateGate
 
 
 
+      ##
       # Adds an instance method to return TRUE if the current attribute state can
       # transition to the queries status.
-      #   eg:
-      #       .status_transitions_to?(:active)    # =>  true
-      #       .status_transitions_to?(:archived)  # =>  false
+      #
+      # @param [Symbol] method_name
+      #   the name for the new method
+      #
+      # @example
+      #   .status_transitions_to?(:active)    #=>  true
+      #   .status_transitions_to?(:archived)  #=>  false
       #
       def _add__instance__attr_transitions_to(method_name = @attribute)
         method_name = "#{method_name}_transitions_to?"

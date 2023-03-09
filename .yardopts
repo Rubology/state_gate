@@ -1,0 +1,4 @@
+--title "StateGate - State Management for ActiveRecord"
+--no-private
+lib/**/*.rb -
+CHANGELOG.md SECURITY.md DEVELOPER_GUIDE.md

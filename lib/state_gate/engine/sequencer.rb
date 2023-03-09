@@ -15,16 +15,23 @@ module StateGate
       #   Configuration Methods
       # ======================================================================
 
+      ##
       # Automatically add transitions from each state to the preceeding and following states.
       #   make_sequential
       #
-      # [:one_way]
-      #   Only adds tranitions from each state to the follow state. (optional)
-      #     make_sequential :one_way
+      # @param [Array[Symbol]] args
+      #   the optional configuration arguments
       #
-      # [:loop]
+      # @option args [Symbol] :one_way
+      #   Only adds tranitions from each state to the follow state. (optional)
+      #
+      # @option args [Symbol] :loop
       #   Adds transitions from the last state to the first and from the first to the last
       #   (unless also :one_way) (optional)
+      #
+      # @example
+      #     make_sequential :one_way
+      #     make_sequential :loop
       #     make_sequential :one_way, :loop
       #
       def make_sequential(*args)
@@ -35,6 +42,7 @@ module StateGate
 
 
 
+      ##
       # Add sequence hooks if sequential requested.
       #
       def generate_sequences
@@ -47,6 +55,7 @@ module StateGate
 
 
 
+      ##
       # Add the previous sequential state
       #
       def add_previous_sequential_state
@@ -64,6 +73,7 @@ module StateGate
 
 
 
+      ##
       # Add the next sequential state
       #
       def add_next_sequential_state
@@ -79,6 +89,7 @@ module StateGate
 
 
 
+      ##
       # Add the first and last transitions to complete the sequential loop.
       #
       def loop_sequence
@@ -103,9 +114,11 @@ module StateGate
       # ======================================================================
 
       ##
-      # return TRUE if the state_gate is sequential, otherwise FALSE.
+      # @return [Boolean]
+      #  true if the state_gate is sequential, otherwise false.
       #
-      #   .sequential?  # => TRUE
+      # @example
+      #   .sequential?  #=> TRUE
       #
       def sequential?
         !!@sequential

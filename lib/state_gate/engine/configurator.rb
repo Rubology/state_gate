@@ -12,61 +12,61 @@ module StateGate
     #
     # Options include:
     #
-    # === | state
-    # Required name for the new state, supplied as a Symbol. The +state-gate+ requires
-    # a minimum of two states to be defined.
+    # [state]
+    #   Required name for the new state, supplied as a Symbol. The +state-gate+ requires
+    #   a minimum of two states to be defined.
     #     state :state_name
     #
     #
-    # [:transitions_to]
+    #   **_:transitions_to_**
     #   An optional list of the other state that this state is allowed to change to.
     #     state :state_1, transtions_to: [:state_2, :state_3, :state_4]
     #     state :state_2, transtions_to: :state_4
     #     state :state_3, transtions_to: :any
     #     state :state_4
     #
-    # [:human]
+    #   **_:human_**
     #   An optional String name to used when displaying gthe state in a view. If no
     #   name is specified, it will default to +:state.titleized+.
     #     state :state_1, transtions_to: [:state_2, :state_3], human: "My State"
     #
     #
-    # === | default
-    # Optional setting to specify the default state for a new object. The state name
-    # is given as a Symbol.
+    # [default]
+    #   Optional setting to specify the default state for a new object. The state name
+    #   is given as a Symbol.
     #     default :state_name
     #
     #
-    # === | prefix
-    # Optional setting to add a given Symbol before each state name when using Class Scopes.
-    # This helps to differential between multiple attributes that have similar state names.
-    #     prefix :before  # => Class.before_active
+    # [prefix]
+    #   Optional setting to add a given Symbol before each state name when using Class Scopes.
+    #   This helps to differential between multiple attributes that have similar state names.
+    #     prefix :before  #=> Class.before_active
     #
     #
-    # === | suffix
-    # Optional setting to add a given Symbol after each state name when using Class Scopes.
-    # This helps to differential between multiple attributes that have similar state names.
-    #     suffix :after  # => Class.active_after
+    # [suffix]
+    #   Optional setting to add a given Symbol after each state name when using Class Scopes.
+    #   This helps to differential between multiple attributes that have similar state names.
+    #     suffix :after  #=> Class.active_after
     #
     #
-    # === | make_sequential
-    # Optional setting to automatically add transitions from each state to both the
-    # preceeding and following states.
+    # [make_sequential]
+    #   Optional setting to automatically add transitions from each state to both the
+    #   preceeding and following states.
     #     make_sequential
     #
-    # [:one_way]
-    #   Option to restrict the generated transitions to one directtion only: from each
-    #   state to the follow state.
-    #     make_sequential :one_way
+    #   **_:one_way_**
+    #     Option to restrict the generated transitions to one directtion only: from each
+    #     state to the follow state.
+    #       make_sequential :one_way
     #
-    # [:loop]
-    #   Option to add transitions from the last state to the first and, unless +:one_way+
-    #   is specified, also from the first state to the last.
-    #     make_sequential :one_way, :loop
+    #   **_:loop_**
+    #     Option to add transitions from the last state to the first and, unless +:one_way+
+    #     is specified, also from the first state to the last.
+    #       make_sequential :one_way, :loop
     #
     #
-    # === | no_scopes
-    # Optional setting to disable the generation of Class Scope helpers methods.
+    # [no_scopes]
+    #   Optional setting to disable the generation of Class Scope helpers methods.
     #     no_scopes
     #
     module Configurator
@@ -81,17 +81,21 @@ module StateGate
       # ======================================================================
 
 
+      ##
       # Execute the provided configuration.
+      #
+      # @block config
+      #   the given configuration
       #
       # ==== actions
       #
-      #   + create sequence links and transitions
-      #   + create scope names
-      #   + remove duplicate transitions for each state
+      # - create sequence links and transitions
+      # - create scope names
+      # - remove duplicate transitions for each state
       #
-      #   + verify there are multiple valid state names
-      #   + verify all transitions lead to existing states
-      #   + verify each state, except the default, can be reached from a transition
+      # - verify there are multiple valid state names
+      # - verify all transitions lead to existing states
+      # - verify each state, except the default, can be reached from a transition
       #
       def parse_configuration(&config)
         exec_configuration(&config)
@@ -109,17 +113,21 @@ module StateGate
 
 
 
+      ##
       # Run the configuration commands.
+      #
+      # @block config
+      #   the given configuration
       #
       # ==== actions
       #
-      #   + create sequence links and transitions
-      #   + create scope names
-      #   + remove duplicate transitions for each state
+      # - create sequence links and transitions
+      # - create scope names
+      # - remove duplicate transitions for each state
       #
-      #   + verify there are multiple valid state names
-      #   + verify all transitions lead to existing states
-      #   + verify each state, except the default, can be reached from a transition
+      # - verify there are multiple valid state names
+      # - verify all transitions lead to existing states
+      # - verify each state, except the default, can be reached from a transition
       #
       def exec_configuration(&config)
         instance_exec(&config)
@@ -136,6 +144,7 @@ module StateGate
       #  Assertions
       # ======================================================================
 
+      ##
       # Ensure there are enough states and the default is a valid state, setting
       # the default to the first state if required.
       #
@@ -158,6 +167,7 @@ module StateGate
 
 
 
+      ##
       # Ensure that transitions have been specified.  If not, then add the transitions
       # to allow every stater to transition to another state and flag the engine as
       # transitionless, so we don't add any validation methods.
@@ -173,6 +183,7 @@ module StateGate
 
 
 
+      ##
       # Ensure that there is only one of reach transition
       #
       def assert_uniq_transitions
@@ -181,6 +192,7 @@ module StateGate
 
 
 
+      ##
       # Ensure that the :any transition is expanded or raise an exception
       # if it's included with other transitions
       def assert_any_has_been_expanded
@@ -196,6 +208,7 @@ module StateGate
 
 
 
+      ##
       # Ensure all transitions are to valid states.
       #
       # Replaces transition to :any with a list of all states
@@ -213,6 +226,7 @@ module StateGate
 
 
 
+      ##
       # Ensure there is a transition leading to every non-default state.
       #
       def assert_all_states_are_reachable

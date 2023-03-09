@@ -39,7 +39,7 @@
 - [installation](#installation)
 - [change log](CHANGELOG.md)
 - [summary](#summary)
-- [wiki - full reference](https://github.com/Rubology/state_gate/wiki)
+- [wiki - how to do anything](https://github.com/Rubology/state_gate/wiki)
 - [RSpec test helpers](#rspec-test-helpers)
 - [contributing](#contributing)
 - [code of conduct](#code-of-conduct)

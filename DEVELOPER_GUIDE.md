@@ -176,7 +176,7 @@ Cops can be run with: `rake rubo`
 
 > Generate documentation and open in browser.
 
-`rake doc`
+`rake doc` or `rake docs`
 
 
 > Run RuboCop.

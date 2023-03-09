@@ -19,14 +19,15 @@ module StateGate
       # = Dynamic Module Creation
       # ======================================================================
 
+      ##
       # Dynamically generated module to hold the StateGate helper methods. This
       # keeps a clear distinction between the state machine helper methods and the klass'
       # own methods.
       #
       # The module is named after the class and is created if needed, or reused if exisitng.
       #
-      # Note:
-      #       the module is named "<klass>::StateGate_HelperMethods"
+      # @note
+      #   the module is named "<klass>::StateGate_HelperMethods"
       #
       def _helper_methods_module
         @_helper_methods_module ||= begin
@@ -46,6 +47,7 @@ module StateGate
       # ======================================================================
 
 
+      ##
       # Adds the hook method :method_added to the Klass, detecting any new method
       # definitions for an attribute already defined as a StateGate.
       #
@@ -54,16 +56,15 @@ module StateGate
       #
       # method_name - the name of the newly defined method.
       #
-      # Note
+      # @note
+      #   This method is added last so it does not trigger when StateGate adds
+      #   the attribute methods.
       #
-      # This method is added last so it does not trigger when StateGate adds
-      # the attribute methods.
+      # meta
       #
-      #  meta
-      #
-      # * loop though each state machine attribute.
-      #   * does the new defined method use 'attr' or 'attr='?
-      #     * if so then record an error logger if denied, othewise use `puts`
+      # - loop though each state machine attribute.
+      #   - does the new defined method use 'attr' or 'attr='?
+      #     - if so then record an error logger if denied, othewise use `puts`
       #
       def _generate_method_redefine_detection # rubocop:disable Metrics/MethodLength
         @klass.instance_eval(%(
@@ -89,12 +90,20 @@ module StateGate
       #   Method Creation
       # ======================================================================
 
+      ##
       # Add an Class helper method to the _helper_methods_module
       #
-      # method_name - a String name for the method, needed to check for conflicts
-      # file        - a String file name for error reporting
-      # line        - a String or Integer line number for error reporting
-      # method_body - a String to bhe evaluates in the module
+      # @param [String] method_name
+      #   name for the method to check for conflicts
+      #
+      # @param [String] file
+      #   file name for error reporting
+      #
+      # @param [String,Integer] line
+      #   line number for error reporting
+      #
+      # @param [String] method_body
+      #   a String to be evaluated in the module
       #
       def add__klass__helper_method(method_name, file, line, method_body)
         detect_class_method_conflict!(method_name)
@@ -103,12 +112,17 @@ module StateGate
 
 
 
+      ##
       # Add an instance helper method to the _helper_methods_module
       #
-      # method_name - a String name for the method, needed to check for conflicts
-      # file        - a String file name for error reporting
-      # line        - a String or Integer line number for error reporting
-      # method_body - a String to bhe evaluates in the module
+      # @param [String] method_name
+      #   name for the method to check for conflicts
+      # @param [String] file
+      #   file name for error reporting
+      # @param [String] line
+      #   line number for error reporting
+      # @param [String] method_body
+      #   a String to bhe evaluates in the module
       #
       def add__instance__helper_method(method_name, file, line, method_body)
         detect_instance_method_conflict!(method_name)

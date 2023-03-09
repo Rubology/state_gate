@@ -10,10 +10,12 @@ module StateGate
     module Transitioner
 
       ##
-      # Returns TRUE if every state can transition to every other state, rendering
-      # transitions pointless.
+      # @return [Boolean]
+      #   true if every state can transition to every other state, rendering
+      #   transitions pointless.
       #
-      #   .transitionless?  # => true
+      # @example
+      #   .transitionless?  #=> true
       #
       def transitionless?
         !!@transitionless
@@ -22,12 +24,14 @@ module StateGate
 
 
       ##
-      # Returns a Hash of states and allowed transitions.
+      # @return [Hash]
+      #   of states and allowed transitions.
       #
-      #   .transitions  # => { pending:   [:active],
-      #                 #      ativive:   [:suspended, :archived],
-      #                 #      suspended: [:active, :archived],
-      #                 #      archived:  [] }
+      # @example
+      #   .transitions  #=> { pending:   [:active],
+      #                        ativive:   [:suspended, :archived],
+      #                        suspended: [:active, :archived],
+      #                        archived:  [] }
       #
       def transitions
         @transitions ||= begin
@@ -40,9 +44,14 @@ module StateGate
 
 
       ##
-      # Return an Array of allowed transitions for the given state
+      # @param [Symbol, String] state
+      #   the state name
       #
-      #   .transitions_for_state(:active) # => [:suspended, :archived]
+      # @return [Array]
+      #   of allowed transitions for the given state
+      #
+      # @example
+      #   .transitions_for_state(:active) #=> [:suspended, :archived]
       #
       def transitions_for_state(state)
         state_name = assert_valid_state!(state)
@@ -52,10 +61,15 @@ module StateGate
 
 
       ##
-      # Returns TRUE if a transition is allowed, otherwise raises an exception.
+      # @return [true]
+      #   if a transition is allowed
       #
-      #   .assert_valid_transition!(:pending, :active) # => true
-      #   .assert_valid_transition!(:active, :pending) # => ArgumentError
+      # @raise [ArgumentError]
+      #   if a transition is invalid
+      #
+      # @example
+      #   .assert_valid_transition!(:pending, :active) #=> true
+      #   .assert_valid_transition!(:active, :pending) #=> ArgumentError
       #
       def assert_valid_transition!(current_state = nil, new_state = nil)
         from_state = assert_valid_state!(current_state)

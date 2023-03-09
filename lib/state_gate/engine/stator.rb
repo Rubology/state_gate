@@ -15,18 +15,19 @@ module StateGate
 
       # Add a new +state+.
       #
-      # [:state_name*]
-      #   The name for the new state. (Symbol | required)
+      # @param [Symbol, String] name
+      #   The name for the new state. It must be converatbel to a Symbol
       #     state :state_name
       #
+      # @param [Hash] opts
+      #   configuration options for the given state
       #
-      # [:transitions_to]
+      # @option opts [Hash] :transitions_to
       #   A list of other state that this state may change to. (Array | optional)
       #     state :state_name, transtions_to: [:state_1, :state_4, :state_5]
       #
-      # [:human]
-      #   A display name for the state used in views.
-      #   (String | optoinal | default: state.titleized)
+      # @option opts [Hash] :human
+      #   A display name for the state used in views, defaulting to state.titleized.
       #     state :state_name, transtions_to: [:state_1, :state_4, :state_5], human: "My State"
       #
       def state(name, opts = {})
@@ -45,14 +46,19 @@ module StateGate
 
 
 
+      ##
       # The name for the default state for a new object. (String | required)
       #
+      # @param [Symbol] default_state
+      #   the state name to set as default
+      #
+      # @example
       #   default :state_name
       #
-      def default(val = nil)
-        cerr(:default_type_err, kattr: true) unless val.is_a?(Symbol)
+      def default(default_state = nil)
+        cerr(:default_type_err, kattr: true) unless default_state.is_a?(Symbol)
         cerr(:default_repeat_err, kattr: true) if   @default
-        @default = StateGate.symbolize(val)
+        @default = StateGate.symbolize(default_state)
       end
 
 
@@ -64,7 +70,8 @@ module StateGate
       ##
       # Returns an Array defined states.
       #
-      #   .states  # => [:pending, :active, :suspended, :archived]
+      # @example
+      #   .states  #=> [:pending, :active, :suspended, :archived]
       #
       def states
         @states.keys
@@ -75,21 +82,25 @@ module StateGate
       ##
       # Ensures the given value is a valid state name.
       #
-      # [value]
-      #   A String or Symbol state name.
+      # @param [String, Symbol] value
+      #   the state name.
       #
-      #     .assert_valid_state!(:active)    # => :active
-      #     .assert_valid_state!('PENDING')  # => :pending
-      #     .assert_valid_state!(:dummy)     # => ArgumentError
+      # @example
+      #   .assert_valid_state!(:active)    #=> :active
+      #   .assert_valid_state!('PENDING')  #=> :pending
+      #   .assert_valid_state!(:dummy)     #=> ArgumentError
       #
       #
-      # [Note]
+      # @note
       #   Valid state names preceeded with +force_+ are also allowed.
       #
-      #     .assert_valid_state!(:force_active)  # => :force_active
+      #     .assert_valid_state!(:force_active)  #=> :force_active
       #
-      # Returns the Symbol state name
-      # Raises an exception if the value is not a valid state name.
+      # @return [Symbol]
+      #   the Symbol state name
+      #
+      # @raise [ArgumentError]
+      #   if the value is not a valid state name.
       #
       def assert_valid_state!(value)
         state_name                      = StateGate.symbolize(value)
@@ -103,7 +114,8 @@ module StateGate
       ##
       # Returns an Array of the human display names for each defined state.
       #
-      #   human_states  # => ['Pending Activation', 'Active', 'Suspended By Admin']
+      # @example
+      #   human_states  #=> ['Pending Activation', 'Active', 'Suspended By Admin']
       #
       def human_states
         @states.map { |_k, v| v[:human] }
@@ -114,8 +126,12 @@ module StateGate
       ##
       # Returns the human display name for a given state.
       #
-      #   .human_state_for(:pending)  # => 'Panding Activation'
-      #   .human_state_for(:active)   # => 'Active'
+      # @param [Symbol] state
+      #   the state name
+      #
+      # @example
+      #   .human_state_for(:pending)  #=> 'Panding Activation'
+      #   .human_state_for(:active)   #=> 'Active'
       #
       def human_state_for(state)
         state_name = assert_valid_state!(state)
@@ -128,15 +144,20 @@ module StateGate
       # Return an Array of states, with their human display names, ready for
       # use in a form select.
       #
-      # sorted - TRUE is the states should be sorted by human name, defaults to false
+      # @param [Boolean] sorted
+      #   true is the states should be sorted by human name, defaults to false
       #
-      #   .states_for_select        # => [['Pending Activation', 'pending'],
-      #                             #     ['Active', 'active'],
-      #                             #     ['Suspended by Admin', 'suspended']]
+      # @return [Array[Array[Strings]]]
+      #   Array of state names with their human names
       #
-      #   .states_for_select(true)  # => [['Active', 'active'],
-      #                             #     ['Pending Activation', 'pending'],
-      #                             #     ['Suspended by Admin', 'suspended']]
+      # @example
+      #   .states_for_select        #=> [['Pending Activation', 'pending'],
+      #                                   ['Active', 'active'],
+      #                                   ['Suspended by Admin', 'suspended']]
+      #
+      #   .states_for_select(true)  #=> [['Active', 'active'],
+      #                                   ['Pending Activation', 'pending'],
+      #                                   ['Suspended by Admin', 'suspended']]
       #
       def states_for_select(sorted = false)
         result = []
@@ -152,12 +173,14 @@ module StateGate
 
 
       ##
-      # Return the raw states hash, allowing inspection of the core engine states.
+      # @return [Hash]
+      #   a hash of states and their transitions & human names
       #
-      #   .raw_states  # => { pending: { transitions_to: [:active],
-      #                #                 human:          'Pending Activation'},
-      #                #      active:  { transitions_to: [:pending],
-      #                #                 human:          'Active'}}
+      # @example
+      #   .raw_states  #=> { pending: { transitions_to: [:active],
+      #                                  human:          'Pending Activation'},
+      #                       active:  { transitions_to: [:pending],
+      #                                  human:          'Active'}}
       #
       def raw_states
         @states
@@ -166,9 +189,11 @@ module StateGate
 
 
       ##
-      # Returns the state_gate default state
+      # @return [String]
+      #   the state_gate default state
       #
-      #   .default_state   # => :pending
+      # @example
+      #   .default_state   #=> :pending
       #
       def default_state
         @default
@@ -183,7 +208,10 @@ module StateGate
 
 
 
-      # return a Hash with the state keys defined.
+      ##
+      # @return [Hash]
+      #   of the state keys defined.
+      #
       def state_template
         {
           transitions_to: [],
@@ -196,8 +224,15 @@ module StateGate
 
 
 
-      # fail if the supplied name is not a symbol, already added
+      ##
+      # Raises an error fail if the supplied name is not a symbol, already added
       # or starts with 'not_' or 'force'.
+      #
+      # @param [Symbol] name
+      #   the state name to validate
+      #
+      # @raise [AygumentError]
+      #   if the state name is invalid
       #
       def assert_valid_state_name(name)
         cerr(:state_type_err, kattr: true) unless name.is_a?(Symbol)
@@ -208,7 +243,17 @@ module StateGate
 
 
 
-      # Fail if opts is not a hash, has non-symbol keys or non-symbol transitions.
+      ##
+      # raises an error if opts is not a hash, has non-symbol keys or non-symbol transitions.
+      #
+      # @param [Hash] opts
+      #   an options hash
+      #
+      # @param [Symbol] name
+      #   the state name
+      #
+      # @raise [ArgumentError]
+      #   if any invalid options
       #
       def assert_valid_opts(opts, state_name)
         unless opts.keys.reject { |k| k.is_a?(Symbol) }.blank?

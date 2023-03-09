@@ -28,9 +28,20 @@ module StateGate
     # ======================================================================
     private
 
+    ##
     # Initialize the engine, setting the Class and attribute for the new engine
     # and parsing the provided configuration.
     #
+    # @param [Class] klass
+    #   The class containing the attribute to be cast as a state gate
+    #
+    # @param [Symbol] attribute
+    #   The name of the database attribute to use for the state gate
+    #
+    # @block config
+    #   The configuration block for the state gate.
+    #
+    # @example
     #   StateGate::Engine.new(MyKlass, :status) do
     #     ... configuration ...
     #   end
@@ -50,7 +61,9 @@ module StateGate
 
 
 
+    ##
     # Set the class variables with default values
+    #
     def set_defaults
       @states         = {}
       @default        = nil

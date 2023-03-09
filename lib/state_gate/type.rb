@@ -12,6 +12,8 @@ module StateGate
   #
   # This class is has an internal API for ActiveRecord and is not intended for public use.
   #
+  # @private
+  #
   class Type < ::ActiveModel::Type::String
 
     ##

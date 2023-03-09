@@ -13,11 +13,15 @@ module StateGate
       #   Configuration Methods
       # ======================================================================
 
+      ##
       # A phrase to add before state names when using Class Scopes.
       # This helps differential attributes that have similar state names.
-      # (Symbol | optional)
       #
-      #   prefix :before  # => Class.before_active
+      # @param [Symbol] val
+      #   the prefix to use
+      #
+      # @example
+      #   prefix :before  #=> Class.before_active
       #
       def prefix(val = nil)
         cerr(:prefix_type_err, kattr: true) unless val.is_a?(Symbol)
@@ -29,9 +33,12 @@ module StateGate
 
       # A phrase to add before state names when using Class Scopes.
       # This helps differential attributes that have similar state names.
-      # (Symbol | optional)
       #
-      #   suffix :after  # => Class.active_after
+      # @param [Symbol] val
+      #   the suffix to use
+      #
+      # @example
+      #   suffix :after  #=> Class.active_after
       #
       def suffix(val = nil)
         cerr(:suffix_type_err, kattr: true) unless val.is_a?(Symbol)
@@ -49,8 +56,9 @@ module StateGate
       # Returns the defined prefix for the state_gate, or an empty string if no
       # prefix has been defined.
       #
-      #   .state_prefix   # => 'my_prefix'
-      #   .state_prefix   # => ''
+      # @example
+      #   .state_prefix   #=> 'my_prefix'
+      #   .state_prefix   #=> ''
       #
       def state_prefix
         @prefix
@@ -62,8 +70,9 @@ module StateGate
       # Returns the defined suffix for the state_gate, or an empty string if no
       # suffix has been defined.
       #
-      #   .state_suffix   # => 'my_suffix'
-      #   .state_suffix   # => ''
+      # @example
+      #   .state_suffix   #=> 'my_suffix'
+      #   .state_suffix   #=> ''
       #
       def state_suffix
         @suffix

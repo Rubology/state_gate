@@ -6,8 +6,8 @@ module StateGate
     # = Description
     #
     # Adds error reporting methods to a StateMachine::Engine
-    # * all error messages are I18n configured
-    # * method names are deliberately short to encourage code readability with
+    # - all error messages are I18n configured
+    # - method names are deliberately short to encourage code readability with
     #   if/unless one-liners
     module Errator
 
@@ -15,7 +15,13 @@ module StateGate
       # ======================================================================
       private
 
+      ##
       # Format the given value and report an ArgumentError
+      #
+      # @param [String]
+      #   the error message
+      #
+      # @raise [ArgumentError]
       #
       def invalid_state_error(val)
         case val
@@ -30,7 +36,16 @@ module StateGate
 
 
 
+      ##
       # Report a ConfigurationError, including the Klass#attr variable.
+      #
+      # @param [Symbol] err
+      #   the I18n error message key
+      #
+      # @param [Hash] args
+      #   arguments to be included in the error
+      #
+      # @raise [ConfigurationError]
       #
       def cerr(err, **args)
         args[:kattr] = "#{@klass}##{@attribute}" if args[:kattr] == true
@@ -40,7 +55,16 @@ module StateGate
 
 
 
+      ##
       # Report a RuntimeError, including the Klass#attr variable.
+      #
+      # @param [Symbol] err
+      #   the I18n error message key
+      #
+      # @param [Hash] args
+      #   arguments to be included in the error
+      #
+      # @raise [RuntimeError]
       #
       def rerr(err, **args)
         args[:kattr] = "#{@klass}##{@attribute}" if args[:kattr] == true
@@ -50,7 +74,16 @@ module StateGate
 
 
 
+      ##
       # Report an ArgumentError, including the Klass#attr variable.
+      #
+      # @param [Symbol] err
+      #   the I18n error message key
+      #
+      # @param [Hash] args
+      #   arguments to be included in the error
+      #
+      # @raise [ArgumentError]
       #
       def aerr(err, **args)
         args[:kattr] = "#{@klass}##{@attribute}" if args[:kattr] == true

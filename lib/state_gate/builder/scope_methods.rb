@@ -8,14 +8,14 @@ module StateGate
     # Multiple private methods enabling StateGate::Builder to generate
     # scopes for each state.
     #
-    # * fetch all records with the given state:
-    #     Klass.active # => Klass.where(state: :active)
+    # - fetch all records with the given state:
+    #     Klass.active #=> Klass.where(state: :active)
     #
-    # * fetch all records without the given state:
-    #     Klass.not_active # => Klass.where.not(state: :active)
+    # - fetch all records without the given state:
+    #     Klass.not_active #=> Klass.where.not(state: :active)
     #
-    # * fetch all records with the supplied states:
-    #     Klass.with_statuses(:pending, :active) # => Klass.where(state: [:pending, :active])
+    # - fetch all records with the supplied states:
+    #     Klass.with_statuses(:pending, :active) #=> Klass.where(state: [:pending, :active])
     #
     module ScopeMethods
 
@@ -24,10 +24,11 @@ module StateGate
       private
 
 
+      ##
       # Add scopes to the klass for filtering by state
       #
-      # Note:
-      #       The scope name is a concatenation of <prefix><state name><suffix>
+      # @note
+      #   The scope name is a concatenation of <prefix><state name><suffix>
       #
       def generate_scope_methods
         return unless @engine.include_scopes?
@@ -45,10 +46,12 @@ module StateGate
       #  Klass methods
       # ======================================================================
 
+      ##
       # Add a klass method that scopes records to the specified state.
-      #   eg:
-      #       Klass.active         # => ActiveRecord::Relation
-      #       Klass.active_status  # => ActiveRecord::Relation
+      #
+      # @example
+      #   Klass.active         #=> ActiveRecord::Relation
+      #   Klass.active_status  #=> ActiveRecord::Relation
       #
       def _add__klass__state_scopes
         attr_name = @attribute
@@ -62,10 +65,12 @@ module StateGate
 
 
 
+      ##
       # Add a klass method that scopes records to those without the specified state.
-      #   eg:
-      #       Klass.not_active         # => ActiveRecord::Relation
-      #       Klass.not_active_status  # => ActiveRecord::Relation
+      #
+      # @example
+      #   Klass.not_active         #=> ActiveRecord::Relation
+      #   Klass.not_active_status  #=> ActiveRecord::Relation
       #
       def _add__klass__not_state_scopes
         attr_name = @attribute
@@ -79,9 +84,14 @@ module StateGate
 
 
 
+      ##
       # Add a klass method that scopes records to the given states.
-      #   eg:
-      #       Klass.with_statuses(:active, :pending) # => ActiveRecord::Relation
+      #
+      # @param [Symbol] method_name
+      #   the method name for the new scope
+      #
+      # @example
+      #   Klass.with_statuses(:active, :pending) #=> ActiveRecord::Relation
       #
       def _add__klass__with_attrs_scope(method_name = @attribute)
         attr_name   = @attribute

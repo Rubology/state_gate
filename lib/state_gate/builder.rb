@@ -14,11 +14,11 @@ module StateGate
   #
   # Both Class and Instance methods are generated for:
   #
-  # * state interaction
-  # * state sequences
-  # * state scopes
-  # * transition interaction
-  # * transition validation
+  # - state interaction
+  # - state sequences
+  # - state scopes
+  # - transition interaction
+  # - transition validation
   #
   class Builder
 
@@ -35,24 +35,23 @@ module StateGate
     # ======================================================================
     private
 
+    ##
     # Initialize the Builder, creating the state gate and generating all the
     # Class and Instace helper methods on the sumbitted klass.
     #
-    # [:klass]
+    # @param [Class] klass
     #   The class containing the attribute to be cast as a state gate
-    #   (Class | required)
     #
-    # [:attribute_name]
-    #   The name of the klass attribute to use for the state gate
-    #   (Symbol | required)
+    # @param [Symbol] attribute_name
+    #   The name of the database attribute to use for the state gate
     #
-    # [:config]
+    # @block config
     #   The configuration block for the state gate.
-    #   (Block | required)
     #
-    #  StateGate::Builder.new(Klass, :attribute_name) do
+    # @example
+    #   StateGate::Builder.new(Klass, :attribute_name) do
     #       ... configuration ...
-    #  end
+    #   end
     #
     def initialize(klass = nil, attribute_name = nil, &config)
       @klass     = klass
@@ -90,6 +89,7 @@ module StateGate
 
 
 
+    ##
     # Validate the klass to ensure it is a 'Class' and derived from ActiveRecord,
     # raising an error if not.
     #
@@ -100,15 +100,16 @@ module StateGate
 
 
 
+    ##
     # Parse the attribute name to ensure it is a valid input value and
     # detect if it's an attribute_alias.
     #
     # = meta
     #
-    # * ensure it exists
-    # * ensure it's a Symbol, to avoid string whitespace issues
-    # * check is it's a registere attribute
-    #   * update @attribute & @alias
+    # - ensure it exists
+    # - ensure it's a Symbol, to avoid string whitespace issues
+    # - check is it's a registere attribute
+    #   - update @attribute & @alias
     #
     def _parse_atttribute_name_for_alias
       if @attribute.nil?
@@ -125,6 +126,7 @@ module StateGate
 
 
 
+    ##
     # Validate we don't already have a state gate defined for the attribute,
     # raising an error if not.
     #
@@ -137,13 +139,14 @@ module StateGate
 
 
 
+    ##
     # Validate the attribute is a database String attribute,
     # raising an error if not.
     #
     # = meta
     #
-    # * ensure it's mapped to a database column
-    # * ensure it's a :string databse type
+    # - ensure it's mapped to a database column
+    # - ensure it's a :string databse type
     #
     def _assert_attribute_name_is_a_database_string_column
       if @klass.column_names.exclude?(@attribute.to_s)
@@ -157,10 +160,12 @@ module StateGate
 
 
 
+    ##
     # Builds a StateGate::Engine for the given attribute and add it to
     # the :stateables repository.
     #
-    # config - the user generated configuration for the engine, including states,
+    # @block config
+    #   the user generated configuration for the engine, including states,
     #           transitions and optional settings
     #
     def _build_state_gate_engine(&config)
@@ -171,6 +176,7 @@ module StateGate
 
 
 
+    ##
     # Adds a :stateables class_attribute if it doesn't already exist and
     # initializes it to an empty Hash.
     #
@@ -178,17 +184,16 @@ module StateGate
     # created when generating state gates. The state gate attribute name is used
     # as the key.
     #
-    # Example
-    #     Klass.stateables # => {
+    # @example
+    #     Klass.stateables #=> {
     #                                         status:   <StateGate::Engine>,
     #                                         account:  <StateGate::Engine>
     #                                       }
     #
-    # Note
-    #
-    # The default empty Hash is set after the attribute is created to accommodate
-    # ActiveRecord 5.0, even though ActiveRecord 6.0 allows it to be set within
-    # the .class_attribute method.
+    # @note
+    #   The default empty Hash is set after the attribute is created to accommodate
+    #   ActiveRecord 5.0, even though ActiveRecord 6.0 allows it to be set within
+    #   the .class_attribute method.
     #
     def _initialize_state_gate_repository
       return if @klass.methods(false).include?(:stateables)
@@ -199,6 +204,7 @@ module StateGate
 
 
 
+    ##
     # Builds a StateGate::Type with the custom states for the attribute,
     # then casts the attribute.
     #
@@ -208,9 +214,9 @@ module StateGate
     #
     # meta
     #
-    # * retrieve the root attribute name if the supplied attribute is an alias.
-    # * create a StateGate::Type with attributes states.
-    # * overwrite the attribute, casting the type as the new StateGate::Type
+    # - retrieve the root attribute name if the supplied attribute is an alias.
+    # - create a StateGate::Type with attributes states.
+    # - overwrite the attribute, casting the type as the new StateGate::Type
     #
     def _cast_attribute_as_state_gate
       states    = @engine.states
@@ -220,17 +226,21 @@ module StateGate
 
 
 
+    ##
     # Raise an ArgumentError for the given error, using I18n for the message.
     #
-    # err - Symbol key for the I18n message
+    # @param [Symbol] err
+    #   the Symbol key for the I18n message
     #
-    # args - Hash of attributes to pass to the message string.
+    # @param [Hash] args
+    #   Hash of attributes to pass to the message string.
     #
-    #        [:klass] When true, args[:klass] will be updated with the 'KlassName'.
-    #        [:kattr] When true, args[:kattr] will be updated with 'KlassName#attribute'.
+    # @option args :klass
+    #   When present, args[:klass] will be updated with the 'KlassName'.
+    # @option args :kattr
+    #   When true, args[:kattr] will be updated with 'KlassName#attribute'.
     #
-    # Example
-    #
+    # @example
     #     err(:invalid_attribute_type_err, kattr: true)
     #
     def err(err, **args)
