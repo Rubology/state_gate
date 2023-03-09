@@ -38,6 +38,6 @@ jobs:
           domain: ${{ github.repository_owner }}
       - name: Push result to TestSpace server
         run: |
-          testspace ./coverage/coverage.xml
+          testspace coverage/coverage.xml
         if: always()
 
