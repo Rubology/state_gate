@@ -6,9 +6,9 @@ require './ruby_version'
 
 # ActiveRecord 7.0
 if RubyVersion >= 2.7
-  appraise 'active-record-7-0-4-2' do
+  appraise 'active-record-7-0-4-3' do
     gem 'sqlite3', '~> 1.4.4'
-    gem 'activerecord', '7.0.4.2'
+    gem 'activerecord', '7.0.4.3'
     gem 'database_cleaner-active_record'
     gem 'simplecov'
     gem 'simplecov-cobertura' 
@@ -18,10 +18,10 @@ end
 
 # ActiveRecord 6.1
 if RubyVersion >= 2.5
-  appraise 'active-record-6-1-7-2' do
+  appraise 'active-record-6-1-7-3' do
     gem 'minitest', '5.15.0'
     gem 'sqlite3', '~> 1.4.0'
-    gem 'activerecord', '6.1.7.2'
+    gem 'activerecord', '6.1.7.3'
     gem 'database_cleaner-active_record'    
   end
 end
