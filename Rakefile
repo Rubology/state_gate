@@ -98,6 +98,23 @@ end
 
 
 
+desc "Runs bundle outdated for the current version of ruby."
+task :outdated do
+  puts "Checking outdated for '#{RubyVersion.gemfile}'"
+  system("BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle outdated")
+end
+
+
+
+desc "Runs bundle update for the current version of ruby."
+task :update do
+  puts "Updating for '#{RubyVersion.gemfile}'"
+  system("BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle outdated")
+  system("BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle update")
+end
+
+
+
 desc "Outputs the terminal command to run 'rspec spec' on the latest version of active_record."
 task :spec_command do
   latest = `bundle _2.3.26_ exec appraisal list`.split("\n").first
