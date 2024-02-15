@@ -1,0 +1,74 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    amazing_print (1.5.0)
+    appraisal (2.5.0)
+      bundler
+      rake
+      thor (>= 0.14.0)
+    ast (2.4.2)
+    byebug (11.1.3)
+    diff-lcs (1.5.1)
+    json (2.7.1)
+    language_server-protocol (3.17.0.3)
+    nio4r (2.7.0)
+    parallel (1.24.0)
+    parser (3.3.0.5)
+      ast (~> 2.4.1)
+      racc
+    puma (6.4.2)
+      nio4r (~> 2.0)
+    racc (1.7.3)
+    rack (3.0.9)
+    rainbow (3.1.1)
+    rake (13.1.0)
+    regexp_parser (2.9.0)
+    rexml (3.2.6)
+    rspec (3.13.0)
+      rspec-core (~> 3.13.0)
+      rspec-expectations (~> 3.13.0)
+      rspec-mocks (~> 3.13.0)
+    rspec-core (3.13.0)
+      rspec-support (~> 3.13.0)
+    rspec-expectations (3.13.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-mocks (3.13.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-support (3.13.0)
+    rubocop (1.60.2)
+      json (~> 2.3)
+      language_server-protocol (>= 3.17.0)
+      parallel (~> 1.10)
+      parser (>= 3.3.0.2)
+      rainbow (>= 2.2.2, < 4.0)
+      regexp_parser (>= 1.8, < 3.0)
+      rexml (>= 3.2.5, < 4.0)
+      rubocop-ast (>= 1.30.0, < 2.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 2.4.0, < 3.0)
+    rubocop-ast (1.30.0)
+      parser (>= 3.2.1.0)
+    ruby-progressbar (1.13.0)
+    thor (1.3.0)
+    unicode-display_width (2.5.0)
+    yard (0.9.34)
+
+PLATFORMS
+  arm64-darwin-22
+  x86_64-linux
+
+DEPENDENCIES
+  amazing_print
+  appraisal
+  byebug
+  puma
+  rack
+  rake (~> 13.0)
+  rspec (~> 3.0)
+  rubocop
+  yard
+
+BUNDLED WITH
+   2.3.26
