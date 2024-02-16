@@ -6,10 +6,10 @@ module RubyVersion
 
 		# Returns the latest known version of Ruby
 		def latest_version
-			Gem::Version.new('3.2')
+			Gem::Version.new('3.3')
 		end
 
-		
+
 
 		# Returns true if the current verion of Ruby is as defined
 		def latest?
@@ -24,7 +24,7 @@ module RubyVersion
 		def is?(expected = nil)
 			expected = refined(expected)
 			expected == current
-		end	
+		end
 
 
 		# Return a Gem::Version of the current Ruby version twith only MJOR.MINOR segments
@@ -73,7 +73,7 @@ module RubyVersion
     # ======================================================================
     # = Private
     # ======================================================================
- 		
+
  		# Return a Gem::Version from the given version refined down to MAJOR.MINOR segments
  		#
  		# version: anything that can be stringified with String(xxx)
@@ -84,4 +84,4 @@ module RubyVersion
 			Gem::Version.new(refined_version)
 		end
 	end
-end	
+end

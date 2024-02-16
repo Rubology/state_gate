@@ -146,7 +146,7 @@ desc "Opens the coverage results in the default brwoser."
 task :coverage do
   Rake::Task["test_latest"].invoke
 
-  unless ENV['FOR_TESTSPACE']
+  unless ENV['GITHUB_ACTION']
     `open coverage/index.html`
   end
 end

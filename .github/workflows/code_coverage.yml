@@ -1,7 +1,7 @@
 # This workflow will download a prebuilt Ruby version, install dependencies and run tests with Rake
 # For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
 
-name: TestSpace Coverage 
+name: 100% Coverage 
 
 on:
   push:
@@ -31,13 +31,11 @@ jobs:
         run: bundle exec rake install
 
       - name: Run tests
-        run: FOR_TESTSPACE=true bundle exec rake latest
+        run: bundle exec rake latest
+      #   run: FAIL_ON_MINIMUM=true BUNDLE_GEMFILE=/home/runner/work/state_gate/state_gate/gemfiles/active_record_7_1_3.gemfile bundle exec rspec spec
 
-      - uses: testspace-com/setup-testspace@v1
-        with:
-          domain: ${{ github.repository_owner }}
-      - name: Push result to TestSpace server
-        run: |
-          testspace coverage/coverage.xml
-        if: always()
-
+      - name: Assert 100% Test Coverage
+        run: >
+          ruby -e "require('json') && 
+          (rate = JSON.parse(File.read('coverage/.last_run.json'))['result']['line'].to_i) &&
+          (rate == 100 ? exit(0) : exit(rate))"

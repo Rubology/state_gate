@@ -16,6 +16,7 @@ require 'database_cleaner/active_record'
 if RubyVersion.latest?
   latest         = `bundle exec appraisal list`.split("\n").first
   latest_version = latest.gsub('active-record-', '').gsub('-', '.')
+
   if latest_version == ActiveRecord.gem_version.to_s
     puts "\nInitializing simplecov"
     require 'simplecov'
@@ -25,11 +26,9 @@ if RubyVersion.latest?
       add_filter 'spec'
     end
 
-    # set output to Coberatura XML if using Testspace analysis
-    if ENV['FOR_TESTSPACE']
-      require 'simplecov-cobertura'
-      SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
-    end
+    # if ENV['FAIL_ON_MINIMUM']
+    #   SimpleCov.minimum_coverage 100
+    # end
 
     # start it up
     SimpleCov.start

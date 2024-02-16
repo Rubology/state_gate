@@ -11,7 +11,6 @@ if RubyVersion >= 2.7
     gem 'activerecord', '7.1.3'
     gem 'database_cleaner-active_record'
     gem 'simplecov'
-    gem 'simplecov-cobertura'
   end
 end
 
