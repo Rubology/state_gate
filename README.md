@@ -15,7 +15,7 @@
 
 | Main Branch| Dev Branch|
 |---|---|
-| ![ruby 3.3](https://github.com/Rubology/state_gate/actions/workflows/ruby_3_2.yml/badge.svg?branch=main) | ![ruby 3.3](https://github.com/Rubology/state_gate/actions/workflows/ruby_3_2.yml/badge.svg?branch=dev) |
+| ![ruby 3.3](https://github.com/Rubology/state_gate/actions/workflows/ruby_3_3.yml/badge.svg?branch=main) | ![ruby 3.3](https://github.com/Rubology/state_gate/actions/workflows/ruby_3_3.yml/badge.svg?branch=dev) |
 | ![ruby 3.2](https://github.com/Rubology/state_gate/actions/workflows/ruby_3_2.yml/badge.svg?branch=main) | ![ruby 3.2](https://github.com/Rubology/state_gate/actions/workflows/ruby_3_2.yml/badge.svg?branch=dev) |
 | ![ruby 3.1](https://github.com/Rubology/state_gate/actions/workflows/ruby_3_1.yml/badge.svg?branch=main) | ![ruby 3.1](https://github.com/Rubology/state_gate/actions/workflows/ruby_3_1.yml/badge.svg?branch=dev) |
 | ![ruby 3.0](https://github.com/Rubology/state_gate/actions/workflows/ruby_3_0.yml/badge.svg?branch=main)  | ![ruby 3.0](https://github.com/Rubology/state_gate/actions/workflows/ruby_3_0.yml/badge.svg?branch=dev)  |
