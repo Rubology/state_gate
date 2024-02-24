@@ -16,7 +16,7 @@ task :test_latest do
   puts "=====================================\n"
 
   latest = `bundle exec appraisal list`.split("\n").first
-  system "BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle _2.3.26_ exec appraisal #{latest} rspec spec"
+  system "WITH_COVERAGE=true BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle _2.3.26_ exec appraisal #{latest} rspec spec"
 end
 
 

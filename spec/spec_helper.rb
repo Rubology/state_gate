@@ -13,12 +13,9 @@ require 'database_cleaner/active_record'
 
 
 # Only calculate coverage when latest version of ruby and ActiveRecord
-if RubyVersion.latest?
-  latest         = `bundle exec appraisal list`.split("\n").first
-  latest_version = latest.gsub('active-record-', '').gsub('-', '.')
-
-  if latest_version == ActiveRecord.gem_version.to_s
-    puts "\nInitializing simplecov"
+if ENV['WITH_COVERAGE']
+  puts "\nCoverage requested."
+  begin
     require 'simplecov'
 
     SimpleCov.configure do
@@ -32,6 +29,13 @@ if RubyVersion.latest?
 
     # start it up
     SimpleCov.start
+
+  rescue LoadError
+    puts "\n *** Coverage required, but SimpleCov gem not available! ***"
+
+  ensure
+    # clear the WITH_COVERAGE environmental variable
+    ENV.delete 'WITH_COVERAGE'
   end
 end
 

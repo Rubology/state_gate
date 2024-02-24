@@ -15,6 +15,7 @@ jobs:
 
     env: # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
       BUNDLE_GEMFILE: ${{ github.workspace }}/ruby_3_3.gemfile
+      GITHUB_ACTION: true
 
     steps:
       - uses: actions/checkout@v4
@@ -31,8 +32,7 @@ jobs:
         run: bundle exec rake install
 
       - name: Run tests
-        run: bundle exec rake latest
-      #   run: FAIL_ON_MINIMUM=true BUNDLE_GEMFILE=/home/runner/work/state_gate/state_gate/gemfiles/active_record_7_1_3.gemfile bundle exec rspec spec
+        run: bundle exec rake coverage
 
       - name: Assert 100% Test Coverage
         run: >
