@@ -67,7 +67,13 @@ puts "\n\n"
 
 # silence all warnings when bulk testing with 'rake all'
 if ENV['HIDE_DEPRECATIONS']
-  ActiveSupport::Deprecation.behavior = :silence
+  ActiveRecord::Migration.verbose = false
+
+  if ActiveRecord.gem_version >= Gem::Version.new("7.1")
+    ActiveRecord.deprecator.behavior = :silence
+  else
+    ActiveSupport::Deprecation.behavior = :silence
+  end
 end
 
 

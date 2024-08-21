@@ -21,7 +21,7 @@ module StateGate
     #
     def cast(value) # :nodoc:
       assert_valid_value(value)
-      value.to_s.downcase.remove(/^force_/)
+      cast_value(value)
     end
 
 
@@ -45,6 +45,17 @@ module StateGate
     def serialize(value) # :nodoc:
       assert_valid_value(value)
       value.to_s.downcase.remove(/^force_/)
+    end
+
+
+
+    ##
+    # Convert a nil DB value to the default state.
+    #
+    def deserialize(value) # :nodoc:
+      return value if value
+
+      klass.constantize.stateables[name].default_state
     end
 
 
@@ -101,7 +112,7 @@ module StateGate
     attr_reader :klass, :name, :states
 
 
-
+    ##
     # initialize and set the class variables
     #
     def initialize(klass, name, states) # :nodoc:
@@ -110,5 +121,12 @@ module StateGate
       @states = states.map(&:to_s)
     end
 
+
+    ##
+    # convert the value to lowercase and remove and 'force_' prefix
+    #
+    def cast_value(value)
+      value.to_s.downcase.remove(/^force_/)
+    end
   end # class Type
 end # StateGate
