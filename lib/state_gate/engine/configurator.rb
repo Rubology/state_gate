@@ -129,10 +129,14 @@ module StateGate
       # - verify all transitions lead to existing states
       # - verify each state, except the default, can be reached from a transition
       #
+      # @note
+      # - gsub both ways to account for ruby 3.4 message change
+      #
       def _exec_configuration(&config)
         instance_exec(&config)
       rescue NameError => e
         err_command = e.to_s.gsub('undefined local variable or method `', '')
+                       .to_s.gsub("undefined local variable or method '", '')
                        .split("'")
                        .first
         _cerr :bad_command, cmd: err_command

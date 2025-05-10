@@ -15,19 +15,15 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    env: # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
-      BUNDLE_GEMFILE: ${{ github.workspace }}/ruby_2_6.gemfile
-
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: '2.6' # Not needed with a .ruby-version file
-        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-    - name: Install Appraisal Gems
-      run: bundle exec rake install
+    - name: Install Gems
+      run: rake bundle
 
     - name: Run tests
-      run: bundle exec rake test_all
+      run: rake test_all

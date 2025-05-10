@@ -19,14 +19,14 @@ RSpec.describe "RubyVersion" do
 
 
 
-	describe ":latest?" do 
-		it 'returns true with the latest version of ruby' do 
+	describe ":latest?" do
+		it 'returns true with the latest version of ruby' do
 			allow(RubyVersion).to receive(:latest_version){ Gem::Version.new(1.2)}
 			allow(RubyVersion).to receive(:current){ Gem::Version.new(1.2)}
 			expect(RubyVersion.latest?).to be_truthy
 		end
 
-		it 'returns false with an invalid version of ruby' do 
+		it 'returns false with an invalid version of ruby' do
 			allow(RubyVersion).to receive(:latest_version){ Gem::Version.new(1.2)}
 			allow(RubyVersion).to receive(:current){ Gem::Version.new(1.3)}
 			expect(RubyVersion.latest?).to be_falsy
@@ -69,18 +69,18 @@ RSpec.describe "RubyVersion" do
 
 
 
-	describe ":==" do 
-		it 'returns false with a higher version of ruby' do 
+	describe ":==" do
+		it 'returns false with a higher version of ruby' do
 			allow(RubyVersion).to receive(:current){ Gem::Version.new(1.2)}
 			expect(RubyVersion == Gem::Version.new(1.3)).to be_falsy
 		end
 
-		it 'returns true with an equal version' do 
+		it 'returns true with an equal version' do
 			allow(RubyVersion).to receive(:current){ Gem::Version.new(1.2)}
 			expect(RubyVersion == Gem::Version.new(1.2)).to be_truthy
 		end
 
-		it 'returns false with a lower version of ruby' do 
+		it 'returns false with a lower version of ruby' do
 			allow(RubyVersion).to receive(:current){ Gem::Version.new(1.2)}
 			expect(RubyVersion == Gem::Version.new(1.1)).to be_falsy
 		end
@@ -88,18 +88,18 @@ RSpec.describe "RubyVersion" do
 
 
 
-	describe ":>=" do 
-		it 'returns false with a higher version of ruby' do 
+	describe ":>=" do
+		it 'returns false with a higher version of ruby' do
 			allow(RubyVersion).to receive(:current){ Gem::Version.new(1.2)}
 			expect(RubyVersion >= Gem::Version.new(1.3)).to be_falsy
 		end
 
-		it 'returns true with an equal version' do 
+		it 'returns true with an equal version' do
 			allow(RubyVersion).to receive(:current){ Gem::Version.new(1.2)}
 			expect(RubyVersion >= Gem::Version.new(1.2)).to be_truthy
 		end
 
-		it 'returns true with a lower version of ruby' do 
+		it 'returns true with a lower version of ruby' do
 			allow(RubyVersion).to receive(:current){ Gem::Version.new(1.2)}
 			expect(RubyVersion >= Gem::Version.new(1.1)).to be_truthy
 		end
@@ -107,18 +107,18 @@ RSpec.describe "RubyVersion" do
 
 
 
-	describe ":>" do 
-		it 'returns false with a higher version of ruby' do 
+	describe ":>" do
+		it 'returns false with a higher version of ruby' do
 			allow(RubyVersion).to receive(:current){ Gem::Version.new(1.2)}
 			expect(RubyVersion > Gem::Version.new(1.3)).to be_falsy
 		end
 
-		it 'returns false with an equal version' do 
+		it 'returns false with an equal version' do
 			allow(RubyVersion).to receive(:current){ Gem::Version.new(1.2)}
 			expect(RubyVersion > Gem::Version.new(1.2)).to be_falsy
 		end
 
-		it 'returns true with a lower version of ruby' do 
+		it 'returns true with a lower version of ruby' do
 			allow(RubyVersion).to receive(:current){ Gem::Version.new(1.2)}
 			expect(RubyVersion > Gem::Version.new(1.1)).to be_truthy
 		end
@@ -126,18 +126,18 @@ RSpec.describe "RubyVersion" do
 
 
 
-	describe ":<=" do 
-		it 'returns true with a higher version of ruby' do 
+	describe ":<=" do
+		it 'returns true with a higher version of ruby' do
 			allow(RubyVersion).to receive(:current){ Gem::Version.new(1.2)}
 			expect(RubyVersion <= Gem::Version.new(1.3)).to be_truthy
 		end
 
-		it 'returns true with an equal version' do 
+		it 'returns true with an equal version' do
 			allow(RubyVersion).to receive(:current){ Gem::Version.new(1.2)}
 			expect(RubyVersion <= Gem::Version.new(1.2)).to be_truthy
 		end
 
-		it 'returns false with a lower version of ruby' do 
+		it 'returns false with a lower version of ruby' do
 			allow(RubyVersion).to receive(:current){ Gem::Version.new(1.2)}
 			expect(RubyVersion <= Gem::Version.new(1.1)).to be_falsy
 		end
@@ -145,28 +145,28 @@ RSpec.describe "RubyVersion" do
 
 
 
-	describe ":<" do 
-		it 'returns true with a higher version of ruby' do 
+	describe ":<" do
+		it 'returns true with a higher version of ruby' do
 			allow(RubyVersion).to receive(:current){ Gem::Version.new(1.2)}
 			expect(RubyVersion < Gem::Version.new(1.3)).to be_truthy
 		end
 
-		it 'returns false with an equal version' do 
+		it 'returns false with an equal version' do
 			allow(RubyVersion).to receive(:current){ Gem::Version.new(1.2)}
 			expect(RubyVersion < Gem::Version.new(1.2)).to be_falsy
 		end
 
-		it 'returns false with a lower version of ruby' do 
+		it 'returns false with a lower version of ruby' do
 			allow(RubyVersion).to receive(:current){ Gem::Version.new(1.2)}
 			expect(RubyVersion < Gem::Version.new(1.1)).to be_falsy
 		end
 	end
 
 
-	describe ':gemfile' do 
-		it 'returns the correct gemfile filename for the given version of Ruby' do 
+	describe ':gemfile' do
+		it 'returns the correct gemfile filename for the given version of Ruby' do
 			allow(RubyVersion).to receive(:current){ Gem::Version.new(1.2)}
-			expect(RubyVersion.gemfile).to eq 'ruby_1_2.gemfile'
+			expect(RubyVersion.gemfile).to eq 'ruby_gemfiles/ruby_1_2.gemfile'
 		end
 	end
 end

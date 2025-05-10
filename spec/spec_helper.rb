@@ -5,6 +5,9 @@
 # ======================================================================
 
 require './ruby_version'
+
+require 'mutex_m'
+require 'logger'
 require 'rspec/expectations'
 require 'active_record'
 require 'byebug'
@@ -28,8 +31,11 @@ if ENV['WITH_COVERAGE']
     # end
 
     # start it up
-    SimpleCov.start
-
+    SimpleCov.start do
+      command_name "RSpec"
+      merge_timeout 3600
+    end
+    
   rescue LoadError
     puts "\n *** Coverage required, but SimpleCov gem not available! ***"
 
@@ -53,11 +59,11 @@ require_relative '../lib/state_gate/rspec'
 current_ruby = Gem::Version.new(RUBY_VERSION)
 msg          = "ActiveRecord: #{ActiveRecord.gem_version} (#{current_ruby})"
 
-puts "\n\n"
+puts "\n\n\n"
 puts '=' * (msg.size + 4)
 puts "\n  #{msg}\n\n"
 puts '=' * (msg.size + 4)
-puts "\n\n"
+puts "\n"
 
 
 
@@ -126,6 +132,9 @@ RSpec.configure do |config|
 
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
+
+
+  config.filter_run_when_matching :focus
 
 
   config.before(:suite) do

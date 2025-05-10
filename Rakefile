@@ -1,7 +1,13 @@
 require './ruby_version'
 
+envs = [ "RUBY_VERSION=#{RubyVersion.current}",
+         "BUNDLE_GEMFILE=#{RubyVersion.gemfile}",
+         "APPRAISAL_FILE=#{RubyVersion.appraisal_file}",
+         "APPRAISAL_GEMFILES_ROOT=#{RubyVersion.appraisal_gemfiles_root}",
+         "APPRAISAL_JOBS=1"].join(' ')
 
-desc "Defaiult task for 'rake', runs 'rspec spec' on latest active_record version."
+
+desc "Default task for 'rake', runs 'rspec spec' on latest active_record version."
 task :default do
   Rake::Task["test_latest"].invoke
 end
@@ -10,13 +16,13 @@ end
 
 desc "Runs 'rspec spec' on latest active_record version."
 task :test_latest do
-  puts "\n\n"
+  puts "\n\n\n"
   puts "=====================================\n"
   puts " Testing Latest ActiveRecord Version"
   puts "=====================================\n"
 
-  latest = `bundle exec appraisal list`.split("\n").first
-  system "WITH_COVERAGE=true BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle _2.3.26_ exec appraisal #{latest} rspec spec"
+  latest = `#{envs} bundle exec appraisal list`.split("\n").first
+  system "WITH_COVERAGE=true #{envs} bundle _2.3.26_ exec appraisal #{latest} rspec spec"
 end
 
 
@@ -31,36 +37,37 @@ end
 desc "Runs 'rspec spec' on every version of active_record."
 task :test_all do
   # hide deprecation warnings
-  parts = ["HIDE_DEPRECATIONS=true"]
+  cmd = ["HIDE_DEPRECATIONS=true",
+           envs,
+          "bundle _2.3.26_ exec appraisal rspec spec"].join(' ')
 
-  # set the gemfile for the current version of ruby
-  parts << "BUNDLE_GEMFILE=#{RubyVersion.gemfile}"
-
-  # run appraisals
-  parts << "bundle _2.3.26_ exec appraisal rspec spec"
-
-  # runb the command
-  system parts.join(' ')
+  system cmd
+  system "ruby -Ilib:test test/state_gate_assertions_test.rb"
 end
 
 
 
 desc "Runs 'rspec spec' on every version of active_record."
 task :all do
-  puts "\n\n"
+  puts "\n\n\n"
   puts "===================================\n"
   puts " Testing All ActiveRecord Versions"
-  puts "===================================\n"
+  puts "===================================\n\n"
 
   Rake::Task["test_all"].invoke
 end
 
 
 
+desc "Runs minispec to test assertions helper."
+task :minitest do
+  system "ruby -Ilib:test test/state_gate_assertions_test.rb"
+end
+
 desc "Runs 'rspec spec --tag test' on latest active_record version."
 task :test_tagged do
-  latest = `bundle exec appraisal list`.split("\n").first
-  system "BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle _2.3.26_ exec appraisal #{latest} rspec spec --tag test"
+  latest = `#{emvs} bundle exec appraisal list`.split("\n").first
+  system "#{envs} bundle _2.3.26_ exec appraisal #{latest} rspec spec --tag test"
 end
 
 
@@ -72,28 +79,36 @@ end
 
 
 desc "Installs the gems and gemfiles for each version of active_record within 'appraisals'."
-task :install do
+task :bundle do
   puts "\n\n"
   puts "==================\n"
   puts " Updating Bundler"
   puts "==================\n"
-  # system "gem update bundler"
   system "gem install bundler:2.3.26"
 
   puts "\n\n"
-  puts "======================\n"
+  puts "=================\n"
   puts " Installing Gems"
-  puts "======================\n"
+  puts "=================\n"
   puts "Using '#{RubyVersion.gemfile}'\n\n"
-  system "BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle _2.3.26_ install"
-  system "BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle _2.3.26_ lock --add-platform x86_64-linux"
+  system "#{envs} bundle _2.3.26_ install"
+  system "#{envs} bundle _2.3.26_ lock --add-platform x86_64-linux"
 
   puts "\n\n"
   puts "======================\n"
   puts " Installing Appraisal"
   puts "======================\n"
-  system "BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle _2.3.26_ exec appraisal install"
+  system "#{envs} bundle _2.3.26_ exec appraisal generate-install"
   puts "\n\n"
+  
+  if RubyVersion.latest?
+    puts "\n\n"
+    puts "=========================\n"
+    puts " Installing Console Gems"
+    puts "=========================\n"
+    system "BUNDLE_GEMFILE=ruby_gemfiles/console.gemfile bundle _2.3.26_ install"
+    system "BUNDLE_GEMFILE=ruby_gemfiles/console.gemfile bundle _2.3.26_ lock --add-platform x86_64-linux"
+  end
 end
 
 
@@ -101,7 +116,7 @@ end
 desc "Runs bundle outdated for the current version of ruby."
 task :outdated do
   puts "Checking outdated for '#{RubyVersion.gemfile}'"
-  system("BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle outdated")
+  system("#{envs} bundle outdated")
 end
 
 
@@ -109,8 +124,8 @@ end
 desc "Runs bundle update for the current version of ruby."
 task :update do
   puts "Updating for '#{RubyVersion.gemfile}'"
-  system("BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle outdated")
-  system("BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle update")
+  system("#{envs} bundle outdated")
+  system("#{envs} bundle update")
 end
 
 
@@ -118,7 +133,7 @@ end
 desc "Outputs the terminal command to run 'rspec spec' on the latest version of active_record."
 task :spec_command do
   latest = `bundle _2.3.26_ exec appraisal list`.split("\n").first
-  puts "\nbundle _2.3.26_ exec appraisal #{latest} rspec spec/\n\n"
+  puts "\n#{envs} bundle _2.3.26_ exec appraisal #{latest} rspec spec/\n\n"
 end
 
 
@@ -145,6 +160,8 @@ end
 desc "Opens the coverage results in the default brwoser."
 task :coverage do
   Rake::Task["test_latest"].invoke
+  
+  system "WITH_COVERAGE=true ruby -Ilib:test test/state_gate_assertions_test.rb"
 
   unless ENV['GITHUB_ACTION']
     `open coverage/index.html`
@@ -161,7 +178,7 @@ task :rubo do
                   'Layout/EmptyLinesAroundModuleBody',
                   'Layout/EmptyLineBetweenDefs'
                 ]
-  system "bundle _2.3.26_ exec rubocop --auto-correct --only #{corrections.join(',')} lib/"
+  system "#{envs} bundle _2.3.26_ exec rubocop --auto-correct --only #{corrections.join(',')} lib/"
 end
 
 
@@ -179,6 +196,6 @@ task :bundler do
   puts "=================\n"
   puts " Bundler Command"
   puts "=================\n\n"
-  puts  "BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle _2.3.26_ "
+  puts  "#{envs} bundle _2.3.26_ "
   puts "\n\n"
 end

@@ -1,0 +1,24 @@
+# Needed for github actions: bundle lock --add-platform x86_64-linux
+
+source 'https://rubygems.org'
+
+gem "base64"
+gem "bigdecimal"
+gem 'amazing_print'
+gem 'benchmark'
+gem 'byebug'
+gem 'database_cleaner-active_record'
+gem 'irb'
+gem 'logger'
+gem 'minitest'
+gem 'mutex_m'
+gem 'puma'
+gem 'rack'
+gem 'rake', 	'~> 13.0'
+gem 'rspec', 	'~> 3.0'
+gem 'rubocop'
+gem 'yard'
+
+gem 'sqlite3'
+gem 'activerecord'
+gem 'database_cleaner-active_record'
