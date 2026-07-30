@@ -1,9 +1,10 @@
 # This workflow will download a prebuilt Ruby version, install dependencies and run tests with Rake
 # For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
 
-name: 100% Coverage 
+name: 100% Coverage
 
 on:
+  workflow_dispatch:
   push:
     branches: [ main, dev ]
   pull_request:
