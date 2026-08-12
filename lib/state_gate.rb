@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative  'state_gate/builder'
+require_relative  'state_gate/assertions'
 
 
 I18n.load_path << File.expand_path('state_gate/locale/engine_en.yml', __dir__)

@@ -39,7 +39,6 @@ require 'active_record'
 require "minitest/autorun"
 
 require_relative '../lib/state_gate'
-require_relative '../lib/state_gate/assertions'
 
 include StateGate::Assertions
 
