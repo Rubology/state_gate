@@ -23,7 +23,7 @@ module StateGate
 
     MAJOR = 2
     MINOR = 0
-    TINY  = 0
+    TINY  = 1
     # MICRO = ''
 
     STRING = [MAJOR, MINOR, TINY].compact.join(".")

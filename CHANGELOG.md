@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.0.1
+
+### Added
+- Auto-require StateGate::Assertions for easier reference.
+
 ## 2.0.0
 
 ### Added
